@@ -1,0 +1,56 @@
+.publi{
+  border-radius: 0.7rem;
+  border-left-width: 0.7rem;
+}
+
+.thesis{
+  border-left-color: #f8c91f;
+}
+
+.journal{
+  border-left-color: #c32b72;
+}
+
+.conf{
+  border-left-color: #196ca3;
+}
+
+.incoming{
+  border-left-color: #606b70;
+}
+
+.smaller{
+  font-size: 1rem;
+}
+
+.dark{
+  background-color: #263238;
+}
+
+.title{
+  font-style: bold;
+}
+.author{
+    font-style: normal;
+
+}
+.conf{
+  font-style: normal;
+}
+
+.publ{
+  display: table-cell;
+}
+
+.modal-footer{
+  display: block;
+}
+
+.fa-lg{
+  font-size: 1.3em;
+  vertical-align: middle;
+}
+.presentations{
+  list-style-type:disc;
+}
+

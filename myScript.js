@@ -26,6 +26,20 @@ var app = new Vue({
       year:'2022',
       publications: [
         {
+            id:'BKR2023',
+            title:"New Width Parameters for Independent Set: One-sided-mim-width and Neighbor-depth",
+            authors:"with Tuukka Korhonen, Igor Razgon.",
+            conf:"",
+            journal:"",
+            comment:"Available on arxiv",
+            openacess:"https://arxiv.org/abs/2302.10643",
+            pdf:"https://arxiv.org/pdf/2302.10643",
+            bibtex:"",
+            presentations: [
+            ],
+            abstract:'We study the tractability of the maximum independent set problem from the viewpoint of graph width parameters, with the goal of defining a width parameter that is as general as possible and allows to solve independent set in polynomial-time on graphs where the parameter is bounded. We introduce two new graph width parameters: one-sided maximum induced matching-width (o-mim-width) and neighbor-depth. O-mim-width is a graph parameter that is more general than the known parameters mim-width and tree-independence number, and we show that independent set and feedback vertex set can be solved in polynomial-time given a decomposition with bounded o-mim-width. O-mim-width is the first width parameter that gives a common generalization of chordal graphs and graphs of bounded clique-width in terms of tractability of these problems. The parameter o-mim-width, as well as the related parameters mim-width and sim-width, have the limitation that no algorithms are known to compute bounded-width decompositions in polynomial-time. To partially resolve this limitation, we introduce the parameter neighbor-depth. We show that given a graph of neighbor-depth $k$, independent set can be solved in time $n^{O(k)}$ even without knowing a corresponding decomposition. We also show that neighbor-depth is bounded by a polylogarithmic function on the number of vertices on large classes of graphs, including graphs of bounded o-mim-width, and more generally graphs of bounded sim-width, giving a quasipolynomial-time algorithm for independent set on these graph classes. This resolves an open problem asked by Kang, Kwon, Strømme, and Telle [TCS 2017]. '
+        },
+        {
             id:'B2022',
             title:"A new notion of Representative Sets for Graph Coloring",
             authors:"",
@@ -128,15 +142,15 @@ var app = new Vue({
            bibtex:"",
            presentations: [
              {
+               place:"WG, online presentation June 2020",
+               slides:"./pdf/WG20.pdf",
+               video:""
+             },
+             {
                place:"Bergen, algorithm group seminar, October 2020",
                slides:"./slides/BergenSeminar1020.pdf",
                video:""
              },
-             {
-               place:"WG, online presentation June 2020",
-               slides:"./slides/WG20.pdf",
-               video:""
-             }
            ],
            abstract:"The two weighted graph problems  Node Multiway Cut  (NMC) and  Subset Feedback Vertex Set  (SFVS) both ask for a vertex set of minimum total weight, that for NMC disconnects a given set of terminals, and for SFVS intersects all cycles containing a vertex of a given set. We design a meta-algorithm that will allow to solve both problems in time $2^{O(rw^3)}\\cdot n^{4}$,  $2^{O(q^2\\log(q))}\\cdot n^{4}$, and $n^{O(k^2)}$ where $rw$ is the rank-width, $q$ the $\\mathbb{Q}$-rank-width, and $k$ the mim-width of a given decomposition. This answers in the affirmative an open question raised by Jaffke et al. (Algorithmica, 2019) concerning an XP algorithm for SFVS parameterized by mim-width. <br> By a unified algorithm, this solves both problems in polynomial-time on the following graph classes: Interval ,  Permutation , and  Bi-Interval  graphs, Circular Arc  and  Circular Permutation  graphs,  Convex  graphs,  $k$-Polygon , Dilworth-$k$  and  Co-$k$-Degenerate  graphs for fixed $k$; and also on  Leaf Power  graphs if a leaf root is given as input, on  $H$-Graphs  for fixed $H$ if an $H$-representation is given as input, and on arbitrary powers of graphs in all of the above classes. Prior to our results, only SFVS was known to be tractable restricted only on  Interval  and  Permutation  graphs, whereas all other results are new."
          },
@@ -159,17 +173,17 @@ var app = new Vue({
             presentations: [
               {
                 place:"ESA 2019, Munich (Germany)",
-                slides:"./slides/ESA2019.pdf",
+                slides:"./pdf/ESA2019.pdf",
                 video:""
               },
               {
                 place:"IBS Summer Research Program on Algorithms and Complexity in Discrete Structures, Daejong (South Korea), July 2019",
-                slides:"./slides/IBS_talkBenjamin.pdf",
+                slides:"./pdf/IBS_talkBenjamin.pdf",
                 video:"https://www.youtube.com/watch?v=bvMxhJTABno"
               },
               {
                 place:"University of Bergen (Norway), March 2019",
-                slides:"./slides/BergenFev19.pdf",
+                slides:"",
                 video:""
               },
               {
@@ -280,7 +294,7 @@ var app = new Vue({
             presentations: [
               {
                 place:"University of Bergen (Norway), February 2019",
-                slides:"./slides/BergenNov19.pdf",
+                slides:"./pdf/BergenNov19.pdf",
                 video:""
               },
               {

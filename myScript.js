@@ -71,7 +71,7 @@ var app = new Vue({
             presentations: [
               {
                 place:"Virtual Colloquium, IBS (South Korea), February 2023",
-                slides:"./pdf/slide_IBS.pdf",
+                slides:"./pdf/Slide_IBS.pdf",
                 video:""
               },
                {

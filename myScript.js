@@ -26,20 +26,6 @@ var app = new Vue({
       year:'2022',
       publications: [
         {
-            id:'BKR2023',
-            title:"New Width Parameters for Independent Set: One-sided-mim-width and Neighbor-depth",
-            authors:"with Tuukka Korhonen, Igor Razgon.",
-            conf:"",
-            journal:"",
-            comment:"Available on arxiv",
-            openacess:"https://arxiv.org/abs/2302.10643",
-            pdf:"https://arxiv.org/pdf/2302.10643",
-            bibtex:"",
-            presentations: [
-            ],
-            abstract:'We study the tractability of the maximum independent set problem from the viewpoint of graph width parameters, with the goal of defining a width parameter that is as general as possible and allows to solve independent set in polynomial-time on graphs where the parameter is bounded. We introduce two new graph width parameters: one-sided maximum induced matching-width (o-mim-width) and neighbor-depth. O-mim-width is a graph parameter that is more general than the known parameters mim-width and tree-independence number, and we show that independent set and feedback vertex set can be solved in polynomial-time given a decomposition with bounded o-mim-width. O-mim-width is the first width parameter that gives a common generalization of chordal graphs and graphs of bounded clique-width in terms of tractability of these problems. The parameter o-mim-width, as well as the related parameters mim-width and sim-width, have the limitation that no algorithms are known to compute bounded-width decompositions in polynomial-time. To partially resolve this limitation, we introduce the parameter neighbor-depth. We show that given a graph of neighbor-depth $k$, independent set can be solved in time $n^{O(k)}$ even without knowing a corresponding decomposition. We also show that neighbor-depth is bounded by a polylogarithmic function on the number of vertices on large classes of graphs, including graphs of bounded o-mim-width, and more generally graphs of bounded sim-width, giving a quasipolynomial-time algorithm for independent set on these graph classes. This resolves an open problem asked by Kang, Kwon, Strømme, and Telle [TCS 2017]. '
-        },
-        {
             id:'B2022',
             title:"A new notion of Representative Sets for Graph Coloring",
             authors:"",
@@ -58,11 +44,25 @@ var app = new Vue({
             ],
             abstract:'Many efficient algorithms have been designed for Graph Coloring parameterized by width parameters such as tree-width, clique-width, rank-width and mim-width. For tree-width and clique-width, we even know algorithms that are optimal under SETH. However, these algorithms rely on techniques that are specific to each width parameter. <br> We unify these algorithmic results with a new notion of representativity between sets of partial colorings. This notion can be used to reduce the size of a collection of partial colorings in any dynamic programming algorithms for Graph Coloring. We give two applications of this new concepts. <br> We provide a greedy algorithm that, given a branch decomposition of mim-width 1 of a graph $G$, solves Graph Coloring in time $O(|{V(G)}|^2)$. Prior to our results, it was known that Graph Coloring was solvable in polynomial time on graphs of mim-width 1 (because they are perfect graphs) and NP-hard given a decomposition of mim-width 2. <br> We give a meta-algorithm for Graph Coloring whose running time asymptotically matches the running time of the best-known algorithms for several width measures including clique-width, rank-width and mim-width. Moreover, for clique-width and rank-width, the performance of this meta-algorithm matches asymptotically the state of the art both in the few-colors and many-colors cases. <br> Finally, we provide an interesting open question on the computation of representative sets of minimum size.'
           },
+          {
+              id:'BKR2023',
+              title:"New Width Parameters for Independent Set: One-sided-mim-width and Neighbor-depth",
+              authors:"with Tuukka Korhonen, Igor Razgon.",
+              conf:"WG 2023",
+              journal:"",
+              comment:"",
+              openacess:"https://arxiv.org/abs/2302.10643",
+              pdf:"https://arxiv.org/pdf/2302.10643",
+              bibtex:"",
+              presentations: [
+              ],
+              abstract:'We study the tractability of the maximum independent set problem from the viewpoint of graph width parameters, with the goal of defining a width parameter that is as general as possible and allows to solve independent set in polynomial-time on graphs where the parameter is bounded. We introduce two new graph width parameters: one-sided maximum induced matching-width (o-mim-width) and neighbor-depth. O-mim-width is a graph parameter that is more general than the known parameters mim-width and tree-independence number, and we show that independent set and feedback vertex set can be solved in polynomial-time given a decomposition with bounded o-mim-width. O-mim-width is the first width parameter that gives a common generalization of chordal graphs and graphs of bounded clique-width in terms of tractability of these problems. The parameter o-mim-width, as well as the related parameters mim-width and sim-width, have the limitation that no algorithms are known to compute bounded-width decompositions in polynomial-time. To partially resolve this limitation, we introduce the parameter neighbor-depth. We show that given a graph of neighbor-depth $k$, independent set can be solved in time $n^{O(k)}$ even without knowing a corresponding decomposition. We also show that neighbor-depth is bounded by a polylogarithmic function on the number of vertices on large classes of graphs, including graphs of bounded o-mim-width, and more generally graphs of bounded sim-width, giving a quasipolynomial-time algorithm for independent set on these graph classes. This resolves an open problem asked by Kang, Kwon, Strømme, and Telle [TCS 2017]. '
+          },
     	  {
             id:'BKN2022',
             title:"Tight Lower Bounds for Problems Parameterized by Rank-width",
             authors:"with T. Korhonen and J. Nederlof.",
-            conf:"STACS 2023",
+            conf:"Accepted to STACS 2023",
             journal:"",
             comment:"",
             openacess:"http://arxiv.org/abs/2210.02117",
@@ -71,7 +71,7 @@ var app = new Vue({
             presentations: [
               {
                 place:"Virtual Colloquium, IBS (South Korea), February 2023",
-                slides:"./pdf/Slide_IBS.pdf",
+                slides:"./pdf/slideIBS.pdf",
                 video:""
               },
                {
@@ -86,7 +86,7 @@ var app = new Vue({
             id:'BDJ2022',
             title:"A Logic-Based Algorithmic Meta-Theorem for Mim-Width",
             authors:"with  J. Dreier and L. Jaffke.",
-            conf:"SODA 2023",
+            conf:"Accepted to SODA 2023",
             journal:"",
             comment:"",
             openacess:"https://arxiv.org/abs/2202.13335",

@@ -28,7 +28,7 @@ var app = new Vue({
         {
             id:'ShrubdepthSpace',
             title:"Space-Efficient Parameterized Algorithms on Graphs of Low Shrubdepth",
-            authors:"V. Chekan, M. Kanté, R. Ganian, M. Mnich, M. Pilipczuk, S. Oum,  E.J. van Leeuwen.",
+            authors:"with V. Chekan, M. Kanté, R. Ganian, M. Mnich, M. Pilipczuk, S. Oum,  E.J. van Leeuwen.",
             conf:"",
             journal:"",
             comment:"In preparation",

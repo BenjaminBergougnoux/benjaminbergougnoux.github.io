@@ -30,15 +30,11 @@
 
 
 <body id="home" data-spy="scroll" data-target="#myNavBar" data-offset="1">
-
-
-
-
       <div id="baniere" class="bg-light container-fluid">
         <div class="row">
           <div id="myCarousel" class="col-lg-7 px-0 carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
             <div class="carousel-inner">
-              <template v-for="n in 18">
+              <template v-for="n in 17">
                 <div v-if="n==counter" class="carousel-item active" >
                   <img v-bind:src="'./img/bg-'+n+'.jpg'" class="d-block w-100" alt="magnifique baniere">
                 </div>
@@ -57,26 +53,43 @@
             </button>
           </div>
 
-
-
-          <div class="col-lg-5 col-sm-8 my-auto text-left" >
+          <div class="col-lg-5 col-sm-12  pt-2 text-center" >
             <h2>Benjamin Bergougnoux</h2>
             <hr>
-            <h5 >Email: <span class="text-secondary"> <i>firstname</i>.<i>lastname</i>(at)mimuw.edu.pl</span></h5>
+            <h5 >Email: <span class="text-secondary"> <i>benjamin</i>.<i>bergougnoux</i>(at)mimuw.edu.pl</span></h5>
             <p>I am currently a postdoc at the Institute of Informatics, Faculty of Mathematics, Informatics and Mechanics of the University of Warsaw.
             </p>
-            <div class="btn-group d-flex justify-content-center pb-2" role="group" aria-label="Basic example">
-              <a type="button" class="btn btn-dark" href="#publilist">Publications</a>
-              <a type="button" class="btn btn-dark" data-bs-toggle="modal"  data-bs-target="#phdmodal">PhD Thesis</a>
-              <a type="button " class="btn btn-dark" href="./pdf/CV_Bergougnoux_EN.pdf">Curriculum vitæ</a>
             </div>
-            </div>
+        </div>
+        </div>
 
-            <div class="col-4 my-5 d-none d-sm-block d-lg-none ">
-              <img class="img-fluid rounded-circle" alt="Wonderful photo of myself" src="me.jpg" />
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNavDarkDropdown">
+              <ul class="navbar-nav ">
+                <li class="nav-item">
+                  <a type="button" class="btn btn-dark" href="#publilist">Publications</a>
+                 </li>
+                 <li class="nav-item">
+                   <a type="button" class="btn btn-dark" data-bs-toggle="modal"  data-bs-target="#phdmodal">PhD Thesis</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Curriculum vitæ
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                    <li><a class="dropdown-item" href="./pdf/CV_Bergougnoux_EN.pdf">English</a></li>
+                    <li><a class="dropdown-item" href="./pdf/CV_Bergougnoux_FR.pdf">Français</a></li>
+                  </ul>
+                </li>
+              </ul>
             </div>
           </div>
-        </div>
+        </nav>
+
 
         <div class="bg-dark text-white p-4">
           <div class="row">
@@ -127,7 +140,39 @@
             </li>
 
 
-          <div class="modal fade" v-bind:id="'modal'+item.id" role="dialog">
+          <div class="modal fade" v-bind:id="'modal'+item.id" role="dialog"><div class="row col-lg-5 col-sm-8  text-left" >
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a type="button" class="btn btn-dark" href="#publilist">Publications</a>
+                     </li>
+                     <li class="nav-item">
+                       <a type="button" class="btn btn-dark" data-bs-toggle="modal"  data-bs-target="#phdmodal">PhD Thesis</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Curriculum vitæ
+                      </a>
+                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item" href="./pdf/CV_Bergougnoux_EN.pdf">English</a></li>
+                        <li><a class="dropdown-item" href="./pdf/CV_Bergougnoux_FR.pdf">Français</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+            <h2>Benjamin Bergougnoux</h2>
+            <hr>
+            <h5 >Email: <span class="text-secondary"> <i>firstname</i>.<i>lastname</i>(at)mimuw.edu.pl</span></h5>
+            <p>I am currently a postdoc at the Institute of Informatics, Faculty of Mathematics, Informatics and Mechanics of the University of Warsaw.
+            </p>
+            </div>
             <div class="modal-dialog modal-xl">
               <div class="modal-content">
                 <div class="modal-header">
@@ -230,7 +275,39 @@
                         In this framework, the complexity of a problem is not measured only in terms of the input size, but also in terms of a parameter on the input.
                         One of the most well-studied parameters is tree-width, a graph parameter which measures how close a graph is to the topological structure of a tree.
                         It appears that tree-width has numerous structural properties and algorithmic applications.
-                        <br>
+                        <br><div class="row col-lg-5 col-sm-8  text-left" >
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a type="button" class="btn btn-dark" href="#publilist">Publications</a>
+                     </li>
+                     <li class="nav-item">
+                       <a type="button" class="btn btn-dark" data-bs-toggle="modal"  data-bs-target="#phdmodal">PhD Thesis</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Curriculum vitæ
+                      </a>
+                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item" href="./pdf/CV_Bergougnoux_EN.pdf">English</a></li>
+                        <li><a class="dropdown-item" href="./pdf/CV_Bergougnoux_FR.pdf">Français</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+            <h2>Benjamin Bergougnoux</h2>
+            <hr>
+            <h5 >Email: <span class="text-secondary"> <i>firstname</i>.<i>lastname</i>(at)mimuw.edu.pl</span></h5>
+            <p>I am currently a postdoc at the Institute of Informatics, Faculty of Mathematics, Informatics and Mechanics of the University of Warsaw.
+            </p>
+            </div>
                         However, only sparse graph classes can have bounded tree-width.
                         But, many NP-hard problems are tractable on dense graph classes.
                         Most of the time, this tractability can be explained by the ability of these graphs to be recursively decomposable along vertex bipartitions $(A,B)$ where the adjacency between $A$ and $B$ is simple to describe.
@@ -289,6 +366,9 @@ bibsource = {dblp computer science bibliography, https://dblp.org}
                   </li>
                   <li>
                     <a href="http://fpt.wikidot.com/">Parameterized Complexity Community Wiki</a>
+                  </li>
+                  <li>
+                    <a href="https://scholar.google.fr/citations?user=m-TtvNoAAAAJ&hl=fr&oi=ao">My Google Scholar</a>
                   </li>
                 </ul>
               </div>

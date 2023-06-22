@@ -71,13 +71,13 @@
             <div class="collapse navbar-collapse justify-content-center" id="navbarNavDarkDropdown">
               <ul class="navbar-nav ">
                 <li class="nav-item">
-                  <a type="button" class="btn btn-dark" href="#publilist">Publications</a>
+                  <a type="button" class="btn btn-outline-light me-2" href="#publilist">Publications</a>
                  </li>
                  <li class="nav-item">
-                   <a type="button" class="btn btn-dark" data-bs-toggle="modal"  data-bs-target="#phdmodal">PhD Thesis</a>
+                   <a type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal"  data-bs-target="#phdmodal">PhD Thesis</a>
                 </li>
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <a class=" dropdown-toggle btn btn-outline-light me-2" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Curriculum vitæ
                   </a>
                   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -140,97 +140,65 @@
             </li>
 
 
-          <div class="modal fade" v-bind:id="'modal'+item.id" role="dialog"><div class="row col-lg-5 col-sm-8  text-left" >
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-              <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a type="button" class="btn btn-dark" href="#publilist">Publications</a>
-                     </li>
-                     <li class="nav-item">
-                       <a type="button" class="btn btn-dark" data-bs-toggle="modal"  data-bs-target="#phdmodal">PhD Thesis</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Curriculum vitæ
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item" href="./pdf/CV_Bergougnoux_EN.pdf">English</a></li>
-                        <li><a class="dropdown-item" href="./pdf/CV_Bergougnoux_FR.pdf">Français</a></li>
+            <div class="modal fade" v-bind:id="'modal'+item.id" role="dialog">
+              <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title m-0">{{item.title}}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="author col-12"><h5 class="m-0">{{item.authors}}</h5></div>
+                        <div class="text-primary col-12">
+                          <span class="small">
+                            <span v-if="item.journal" class="text-primary">{{item.journal}}.
+                              <span v-if="item.conf" class="text-secondary">{{item.conf}}.</span>
+                            </span>
+                            <span v-else-if="item.conf" class="conf text-primary">{{item.conf}}.
+                              <span v-if="item.comment" class="text-secondary ">{{item.comment}}.</span>
+                            </span>
+                            <span v-else class="conf text-secondary">{{item.comment}}.</span>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-12  text-justify">
+                          <div class="container">
+                            <span v-html="item.abstract"></span>
+                          </div>
+                        </div>
+                        <div v-if="item.presentations.length" class="col-12 pt-3">
+                          <h5>Presented in:</h5>
+                        </div>
+                        <div class="col-12">
+                          <ul v-for="presentation in item.presentations" class="presentations">
+                            <li>{{presentation.place}}.
+                              <a v-if="presentation.slides" v-bind:href="presentation.slides"> (slides)</a>
+                              <a v-if="presentation.video" v-bind:href="presentation.video"> (video)</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <ul class="nav nav-pills nav-fill">
+                        <li v-if="item.openacess" class="nav-item">
+                          <a v-bind:href="item.openacess" class="btn btn-outline-primary" role="button">
+                            <img class="" height="32px" alt="" src="./img/oa.png" /></a>
+                        </li>
+                        <li v-if="item.pdf" class="nav-item">
+                          <a v-bind:href="item.pdf" class="btn btn-outline-primary" role="button"><span class="far fa-2x fa-file-pdf"></span></a>
+                        </li>
+                        <li v-if="item.bibtex" class="nav-item">
+                          <a v-bind:href="item.bibtex" class="btn btn-outline-primary" role="button">Bibtex</a>
+                        </li>
                       </ul>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
-            <h2>Benjamin Bergougnoux</h2>
-            <hr>
-            <h5 >Email: <span class="text-secondary"> <i>firstname</i>.<i>lastname</i>(at)mimuw.edu.pl</span></h5>
-            <p>I am currently a postdoc at the Institute of Informatics, Faculty of Mathematics, Informatics and Mechanics of the University of Warsaw.
-            </p>
-            </div>
-            <div class="modal-dialog modal-xl">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title m-0">{{item.title}}</h4>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="container-fluid">
-                    <div class="row">
-                      <div class="author col-12"><h5 class="m-0">{{item.authors}}</h5></div>
-                      <div class="text-primary col-12">
-                        <span class="small">
-                          <span v-if="item.journal" class="text-primary">{{item.journal}}.
-                            <span v-if="item.conf" class="text-secondary">{{item.conf}}.</span>
-                          </span>
-                          <span v-else-if="item.conf" class="conf text-primary">{{item.conf}}.
-                            <span v-if="item.comment" class="text-secondary ">{{item.comment}}.</span>
-                          </span>
-                          <span v-else class="conf text-secondary">{{item.comment}}.</span>
-                        </span>
-                      </div>
                     </div>
-                    <div class="row mt-2">
-                      <div class="col-12  text-justify">
-                        <div class="container">
-                          <span v-html="item.abstract"></span>
-                        </div>
-                      </div>
-                      <div v-if="item.presentations.length" class="col-12 pt-3">
-                        <h5>Presented in:</h5>
-                      </div>
-                      <div class="col-12">
-                        <ul v-for="presentation in item.presentations" class="presentations">
-                          <li>{{presentation.place}}.
-                            <a v-if="presentation.slides" v-bind:href="presentation.slides" class="badge bg-danger"> slides</a>
-                            <a v-if="presentation.video" v-bind:href="presentation.video" class="badge bg-dark"> video</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <ul class="nav nav-pills nav-fill">
-                      <li v-if="item.openacess" class="nav-item">
-                        <a v-bind:href="item.openacess" class="btn btn-outline-primary" role="button">
-                          <img class="" height="32px" alt="" src="./img/oa.png" /></a>
-                      </li>
-                      <li v-if="item.pdf" class="nav-item">
-                        <a v-bind:href="item.pdf" class="btn btn-outline-primary" role="button"><span class="far fa-2x fa-file-pdf"></span></a>
-                      </li>
-                      <li v-if="item.bibtex" class="nav-item">
-                        <a v-bind:href="item.bibtex" class="btn btn-outline-primary" role="button">Bibtex</a>
-                      </li>
-                    </ul>
                   </div>
                 </div>
               </div>
-            </div>
           </template>
         </template>
         </ul>
@@ -275,39 +243,7 @@
                         In this framework, the complexity of a problem is not measured only in terms of the input size, but also in terms of a parameter on the input.
                         One of the most well-studied parameters is tree-width, a graph parameter which measures how close a graph is to the topological structure of a tree.
                         It appears that tree-width has numerous structural properties and algorithmic applications.
-                        <br><div class="row col-lg-5 col-sm-8  text-left" >
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-              <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a type="button" class="btn btn-dark" href="#publilist">Publications</a>
-                     </li>
-                     <li class="nav-item">
-                       <a type="button" class="btn btn-dark" data-bs-toggle="modal"  data-bs-target="#phdmodal">PhD Thesis</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Curriculum vitæ
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item" href="./pdf/CV_Bergougnoux_EN.pdf">English</a></li>
-                        <li><a class="dropdown-item" href="./pdf/CV_Bergougnoux_FR.pdf">Français</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
-            <h2>Benjamin Bergougnoux</h2>
-            <hr>
-            <h5 >Email: <span class="text-secondary"> <i>firstname</i>.<i>lastname</i>(at)mimuw.edu.pl</span></h5>
-            <p>I am currently a postdoc at the Institute of Informatics, Faculty of Mathematics, Informatics and Mechanics of the University of Warsaw.
-            </p>
-            </div>
+                        <br>
                         However, only sparse graph classes can have bounded tree-width.
                         But, many NP-hard problems are tractable on dense graph classes.
                         Most of the time, this tractability can be explained by the ability of these graphs to be recursively decomposable along vertex bipartitions $(A,B)$ where the adjacency between $A$ and $B$ is simple to describe.

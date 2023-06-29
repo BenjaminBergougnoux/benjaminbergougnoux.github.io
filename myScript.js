@@ -26,20 +26,6 @@ var app = new Vue({
       year:'2022',
       publications: [
         {
-            id:'ShrubdepthSpace',
-            title:"Space-Efficient Parameterized Algorithms on Graphs of Low Shrubdepth",
-            authors:"with V. Chekan, M. Kanté, R. Ganian, M. Mnich, M. Pilipczuk, S. Oum,  E.J. van Leeuwen.",
-            conf:"",
-            journal:"",
-            comment:"In preparation",
-            openacess:"",
-            pdf:"",
-            bibtex:"",
-            presentations: [
-            ],
-            abstract:'Many efficient algorithms have been designed for Graph Coloring parameterized by width parameters such as tree-width, clique-width, rank-width and mim-width. For tree-width and clique-width, we even know algorithms that are optimal under SETH. However, these algorithms rely on techniques that are specific to each width parameter. <br> We unify these algorithmic results with a new notion of representativity between sets of partial colorings. This notion can be used to reduce the size of a collection of partial colorings in any dynamic programming algorithms for Graph Coloring. We give two applications of this new concepts. <br> We provide a greedy algorithm that, given a branch decomposition of mim-width 1 of a graph $G$, solves Graph Coloring in time $O(|{V(G)}|^2)$. Prior to our results, it was known that Graph Coloring was solvable in polynomial time on graphs of mim-width 1 (because they are perfect graphs) and NP-hard given a decomposition of mim-width 2. <br> We give a meta-algorithm for Graph Coloring whose running time asymptotically matches the running time of the best-known algorithms for several width measures including clique-width, rank-width and mim-width. Moreover, for clique-width and rank-width, the performance of this meta-algorithm matches asymptotically the state of the art both in the few-colors and many-colors cases. <br> Finally, we provide an interesting open question on the computation of representative sets of minimum size.'
-          },
-        {
             id:'B2022',
             title:"A new notion of Representative Sets for Graph Coloring",
             authors:"",
@@ -58,6 +44,20 @@ var app = new Vue({
             ],
             abstract:'Many efficient algorithms have been designed for Graph Coloring parameterized by width parameters such as tree-width, clique-width, rank-width and mim-width. For tree-width and clique-width, we even know algorithms that are optimal under SETH. However, these algorithms rely on techniques that are specific to each width parameter. <br> We unify these algorithmic results with a new notion of representativity between sets of partial colorings. This notion can be used to reduce the size of a collection of partial colorings in any dynamic programming algorithms for Graph Coloring. We give two applications of this new concepts. <br> We provide a greedy algorithm that, given a branch decomposition of mim-width 1 of a graph $G$, solves Graph Coloring in time $O(|{V(G)}|^2)$. Prior to our results, it was known that Graph Coloring was solvable in polynomial time on graphs of mim-width 1 (because they are perfect graphs) and NP-hard given a decomposition of mim-width 2. <br> We give a meta-algorithm for Graph Coloring whose running time asymptotically matches the running time of the best-known algorithms for several width measures including clique-width, rank-width and mim-width. Moreover, for clique-width and rank-width, the performance of this meta-algorithm matches asymptotically the state of the art both in the few-colors and many-colors cases. <br> Finally, we provide an interesting open question on the computation of representative sets of minimum size.'
           },
+          {
+              id:'ShrubdepthSpace',
+              title:"Space-Efficient Parameterized Algorithms on Graphs of Low Shrubdepth",
+              authors:"with V. Chekan, M. Kanté, R. Ganian, M. Mnich, M. Pilipczuk, S. Oum,  E.J. van Leeuwen.",
+              conf:"ESA 2023",
+              journal:"",
+              comment:"",
+              openacess:"",
+              pdf:"",
+              bibtex:"",
+              presentations: [
+              ],
+              abstract:'Many efficient algorithms have been designed for Graph Coloring parameterized by width parameters such as tree-width, clique-width, rank-width and mim-width. For tree-width and clique-width, we even know algorithms that are optimal under SETH. However, these algorithms rely on techniques that are specific to each width parameter. <br> We unify these algorithmic results with a new notion of representativity between sets of partial colorings. This notion can be used to reduce the size of a collection of partial colorings in any dynamic programming algorithms for Graph Coloring. We give two applications of this new concepts. <br> We provide a greedy algorithm that, given a branch decomposition of mim-width 1 of a graph $G$, solves Graph Coloring in time $O(|{V(G)}|^2)$. Prior to our results, it was known that Graph Coloring was solvable in polynomial time on graphs of mim-width 1 (because they are perfect graphs) and NP-hard given a decomposition of mim-width 2. <br> We give a meta-algorithm for Graph Coloring whose running time asymptotically matches the running time of the best-known algorithms for several width measures including clique-width, rank-width and mim-width. Moreover, for clique-width and rank-width, the performance of this meta-algorithm matches asymptotically the state of the art both in the few-colors and many-colors cases. <br> Finally, we provide an interesting open question on the computation of representative sets of minimum size.'
+            },
           {
               id:'BKR2023',
               title:"New Width Parameters for Independent Set: One-sided-mim-width and Neighbor-depth",

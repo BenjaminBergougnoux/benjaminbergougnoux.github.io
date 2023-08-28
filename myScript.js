@@ -51,8 +51,8 @@ var app = new Vue({
               conf:"ESA 2023",
               journal:"",
               comment:"",
-              openacess:"",
-              pdf:"",
+              openacess:"https://arxiv.org/abs/2307.01285",
+              pdf:"https://arxiv.org/pdf/2307.01285",
               bibtex:"",
               presentations: [
               ],

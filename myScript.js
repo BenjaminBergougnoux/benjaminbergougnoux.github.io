@@ -45,6 +45,34 @@ var app = new Vue({
             abstract:'Many efficient algorithms have been designed for Graph Coloring parameterized by width parameters such as tree-width, clique-width, rank-width and mim-width. For tree-width and clique-width, we even know algorithms that are optimal under SETH. However, these algorithms rely on techniques that are specific to each width parameter. <br> We unify these algorithmic results with a new notion of representativity between sets of partial colorings. This notion can be used to reduce the size of a collection of partial colorings in any dynamic programming algorithms for Graph Coloring. We give two applications of this new concepts. <br> We provide a greedy algorithm that, given a branch decomposition of mim-width 1 of a graph $G$, solves Graph Coloring in time $O(|{V(G)}|^2)$. Prior to our results, it was known that Graph Coloring was solvable in polynomial time on graphs of mim-width 1 (because they are perfect graphs) and NP-hard given a decomposition of mim-width 2. <br> We give a meta-algorithm for Graph Coloring whose running time asymptotically matches the running time of the best-known algorithms for several width measures including clique-width, rank-width and mim-width. Moreover, for clique-width and rank-width, the performance of this meta-algorithm matches asymptotically the state of the art both in the few-colors and many-colors cases. <br> Finally, we provide an interesting open question on the computation of representative sets of minimum size.'
           },
           {
+              id:'BGGHPS2023',
+              title:"Sparse Graphs of Twin-width 2 Have Bounded Tree-width.",
+              authors:"with J. Gajarský, G. Guspiel, P. Hlinený, F. Pokrývka, M. Sokolowski.",
+              conf:"ISAAC 2023",
+              journal:"",
+              comment:"",
+              openacess:"https://arxiv.org/abs/2307.01732",
+              pdf:"https://arxiv.org/pdf/2307.01732",
+              bibtex:"",
+              presentations: [
+              ],
+              abstract:'Twin-width is a structural width parameter introduced by Bonnet, Kim, Thomassé and Watrigant [FOCS 2020]. Very briefly, its essence is a gradual reduction (a contraction sequence) of the given graph down to a single vertex while maintaining limited difference of neighbourhoods of the vertices, and it can be seen as widely generalizing several other traditional structural parameters. Having such a sequence at hand allows to solve many otherwise hard problems efficiently. Our paper focuses on a comparison of twin-width to the more traditional tree-width on sparse graphs. Namely, we prove that if a graph $G$ of twin-width at most $2$ contains no $K_{t,t}$ subgraph for some integer $t$, then the tree-width of $G$ is bounded by a polynomial function of $t$. As a consequence, for any sparse graph class $\\mathcal{C}$ we obtain a polynomial time algorithm which for any input graph $G \\in \\mathcal{C}$ either outputs a contraction sequence of width at most $c$ (where $c$ depends only on $\\mathcal{C}$), or correctly outputs that $G$ has twin-width more than $2$. On the other hand, we present an easy example of a graph class of twin-width $3$ with unbounded tree-width, showing that our result cannot be extended to higher values of twin-width.'
+            },
+          {
+              id:'SBGB2023',
+              title:"Kernelization for Finding Lineal Topologies (Depth-First Spanning Trees) with Many or Few Leaves.",
+              authors:"with E. Sam, P. A. Golovach, N. Blaser.",
+              conf:"FCT 2023",
+              journal:"",
+              comment:"",
+              openacess:"https://arxiv.org/abs/2307.00362",
+              pdf:"https://arxiv.org/pdf/2307.00362",
+              bibtex:"",
+              presentations: [
+              ],
+              abstract:'For a given graph $G$, a depth-first search (DFS) tree $T$ of $G$ is an $r$-rooted spanning tree such that every edge of $G$ is either an edge of $T$ or is between a descendant and an ancestor in $T$. A graph $G$ together with a DFS tree is called a lineal topology $\\mathcal{T} = (G, r, T)$. Sam et al. (2023) initiated study of the parameterized complexity of the Min-LLT and Max-LLT problems which ask, given a graph $G$ and an integer $k\\geq 0$, whether $G$ has a DFS tree with at most $k$ and at least $k$ leaves, respectively. Particularly, they showed that for the dual parameterization, where the tasks are to find DFS trees with at least $n-k$ and at most $n-k$ leaves, respectively, these problems are fixed-parameter tractable when parameterized by $k$. However, the proofs were based on Courcelle\'s theorem, thereby making the running times a tower of exponentials. We prove that both problems admit polynomial kernels with $O(k^3)$ vertices. In particular, this implies FPT algorithms running in $k^{O(k)}\\cdot n^{O(1)}$ time. We achieve these results by making use of a $O(k)$-sized vertex cover structure associated with each problem. This also allows us to demonstrate polynomial kernels for Min-LLT and Max-LLT for the structural parameterization by the vertex cover number. '
+            },
+          {
               id:'ShrubdepthSpace',
               title:"Space-Efficient Parameterized Algorithms on Graphs of Low Shrubdepth",
               authors:"with V. Chekan, M. Kanté, R. Ganian, M. Mnich, M. Pilipczuk, S. Oum,  E.J. van Leeuwen.",

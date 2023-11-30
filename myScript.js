@@ -46,7 +46,21 @@ var app = new Vue({
           },
           {
               id:'BGGHPS2023',
-              title:"Sparse Graphs of Twin-width 2 Have Bounded Tree-width.",
+              title:"Enumerating minimal solution sets for metric graph problems",
+              authors:"with O. Defrain and F. Mc Inerney.",
+              conf:"",
+              journal:"",
+              comment:"On arxiv",
+              openacess:"https://arxiv.org/abs/2309.17419",
+              pdf:"https://arxiv.org/pdf/2309.17419",
+              bibtex:"",
+              presentations: [
+              ],
+              abstract:'Problems from metric graph theory such as Metric Dimension, Geodetic Set, and Strong Metric Dimension have recently had a strong impact on the field of parameterized complexity by being the first problems in NP to admit double-exponential lower bounds in the treewidth, and even in the vertex cover number for the latter. We initiate the study of enumerating minimal solution sets for these problems and show that they are also of great interest in enumeration. More specifically, we show that enumerating minimal resolving sets in graphs and minimal geodetic sets in split graphs are equivalent to hypergraph dualization, arguably one of the most important open problems in algorithmic enumeration. This provides two new natural examples to a question that emerged in different works this last decade: for which vertex (or edge) set graph property $\Pi$ is the enumeration of minimal (or maximal) subsets satisfying $\Pi$ equivalent to hypergraph dualization? As only very few properties are known to fit within this context -- namely, properties related to minimal domination -- our results make significant progress in characterizing such properties, and provide new angles of approach for tackling hypergraph dualization. In a second step, we consider cases where our reductions do not apply, namely graphs with no long induced paths, and show these cases to be mainly tractable.'
+            },
+          {
+              id:'BGGHPS2023',
+              title:"Sparse Graphs of Twin-width 2 Have Bounded Tree-width",
               authors:"with J. Gajarský, G. Guspiel, P. Hlinený, F. Pokrývka, M. Sokolowski.",
               conf:"ISAAC 2023",
               journal:"",
@@ -60,7 +74,7 @@ var app = new Vue({
             },
           {
               id:'SBGB2023',
-              title:"Kernelization for Finding Lineal Topologies (Depth-First Spanning Trees) with Many or Few Leaves.",
+              title:"Kernelization for Finding Lineal Topologies (Depth-First Spanning Trees) with Many or Few Leaves",
               authors:"with E. Sam, P. A. Golovach, N. Blaser.",
               conf:"FCT 2023",
               journal:"",

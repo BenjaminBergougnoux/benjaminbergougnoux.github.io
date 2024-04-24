@@ -127,7 +127,7 @@ var app = new Vue({
             presentations: [
               {
                 place:"Virtual Colloquium, IBS (South Korea), February 2023",
-                slides:"./pdf/slideIBS.pdf",
+                slides:"./pdf/IBS_Lower_bound_RW.pdf",
                 video:""
               },
                {
@@ -234,7 +234,7 @@ var app = new Vue({
               },
               {
                 place:"IBS Summer Research Program on Algorithms and Complexity in Discrete Structures, Daejong (South Korea), July 2019",
-                slides:"./pdf/IBS_talkBenjamin.pdf",
+                slides:"./pdf/IBS_summerCamp2019.pdf",
                 video:"https://www.youtube.com/watch?v=bvMxhJTABno"
               },
               {

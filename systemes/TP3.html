@@ -10,6 +10,7 @@
 		
 		<link rel="icon" type="image/png" href="logo.png" />
 		<link href="./../themes/prism.css" rel="stylesheet" />
+		<link href="./../themes/a11y-dark-legacy.css" rel="stylesheet" />
 		<link href="./../themes/mystyle.css" rel="stylesheet">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -32,7 +33,10 @@
 	</head>
 
 
-	<body id="home" data-spy="scroll" data-target="#myNavBar" data-offset="1">
+	<body id="home" data-spy="scroll" data-target="#myNavBar" data-offset="1"
+	data-prismjs-copy="Copier"
+	data-prismjs-copy-error="Copie : erreur"
+	data-prismjs-copy-success="Copie : succès!">
 	 	<div class="container pt-5 pb-3">
 		  <h1 id="htex-h1-1" class="htex" style="text-align: left;">TP n°3 : Threads et
 			sémaphores</h1>
@@ -70,15 +74,15 @@
 				</pre>
 			  </div>
 			  <p>Bien entendu, une aide plus complète peut être obtenue sur chaque
-				fonction en utilisant le manuel UNIX : <code><span
-				    class="htex-ttt">man nom_de_fonction</span></code>.</p>
+				fonction en utilisant le manuel UNIX : 
+				<code class="language-shell">man nom_de_fonction</code>.</p>
 			  <h3 id="htex-h3-2" class="htex">Un exemple</h3>
 			  <p>Cet exemple est la traduction d'un exercice de TP avec un thread qui
 				lit des caractères au clavier et les passe à un autre thread qui se
 				charge de les afficher. Il faut noter que le thread principal (le père)
 				se charge de la création de ses fils et de l'attente de leur mort. Cette
-				disparition est programmée à l'arrivée du caractère <span
-				  class="htex-ttt">EOF</span>.</p>
+				disparition est programmée à l'arrivée du caractère 
+				<code class="language-shell">EOF</code>.</p>
 			  <pre class="language-c"><code>
 		#include &lt;stdio.h&gt; 
 		#include &lt;stdlib.h&gt; 
@@ -161,19 +165,18 @@
 				<li class="htex">Compiler et effectuer l'édition de liens avec la ligne
 				  suivante :
 				  <div class="not-card htex-code htex-copy prettyprint lang-sh">
-				    <code>gcc
-				      votre_programme.c -pthread -o votre_programme</code></div>
+				    <code class="language-shell">  
+				    gcc votre_programme.c -pthread -o votre_programme</code></div>
 				</li>
 				<li class="htex">Dans un autre console, vous pouvez utiliser la commande
-				  <code><span class="htex-ttt">ps -eLf</span></code> pour observer les
+				  <code class="language-shell"> ps -eLf</code> pour observer les
 				  <i>threads</i> créés par cet exemple.</li>
 				<li class="htex">Vérifiez la consommation de CPU en utilisant la
-				  commande <code><span
-				      class="htex-ttt">time votre_programme</span></code>.</li>
+				  commande <code class="language-shell">time votre_programme</code>.</li>
 				<li class="htex">Diminuez cette consommation de CPU en utilisant la
-				  fonction <code><span class="htex-ttt">usleep(100)</span></code> dans
-				  les boucles d'attente et vérifiez le résultat (avec la commande <span
-				    class="htex-ttt">time</span>).</li>
+				  fonction <code class="language-shell">usleep(100)</code> dans
+				  les boucles d'attente et vérifiez le résultat (avec la commande 
+				  <code class="language-shell">time</code>).</li>
 			  </ul>
 			  <h2 id="sysc" class="htex">Utilisation des sémaphores</h2>
 			  <p><span style="color: rgb(0, 0, 0);">La librairie de gestion des
@@ -205,8 +208,8 @@
 		// Destruction d'un sémaphore.
 		int sem_destroy(sem_t * semaphore);</code></pre>
 			  <p>Bien entendu, une aide plus complète peut être obtenue sur chaque
-				fonction en utilisant le manuel UNIX (<code><span class="htex-ttt">man
-				    nom_de_la_fonction</span></code>).</p>
+				fonction en utilisant le manuel UNIX (<code class="language-shell">man
+				    nom_de_la_fonction</code>).</p>
 			  <h3 id="htex-h3-4" class="htex">Un exemple d'utilisation des sémaphores
 			  </h3>
 			  <p>Cet exemple illustre la mise en œuvre d'une section critique (mutuelle
@@ -271,11 +274,11 @@
 				  suivante :<br><code>gcc votre_programme.c -pthread -o
 				    votre_programme</code></li>
 				<li class="htex">Vérifier que le mécanisme d'exclusion mutuelle est bien
-				  nécessaire (commentez l'appel des fonctions <span
-				    class="htex-ttt">sem_wait</span> et <span
-				    class="htex-ttt">sem_post</span>).</li>
-				<li class="htex">Si vous supprimez l'appel à <span
-				    class="htex-ttt">sleep</span> dans la section critique quel est le
+				  nécessaire (commentez l'appel des fonctions 
+				  <code class="language-shell">sem_wait</code> et 
+				  <code class="language-shell">sem_post</code>).</li>
+				<li class="htex">Si vous supprimez l'appel à 
+				<code class="language-shell">sleep</code> dans la section critique quel est le
 				  résultat ? Avez-vous une explication ?</li>
 			  </ul>
 			  <h2 class="htex"> </h2>
@@ -336,14 +339,14 @@
 		int ptr_input = 0;
 		int ptr_output = 0;
 			</code></pre>
-			  <p>La variable <code><span class="htex-ttt">ptr_input</span></code> donne
-				l'indice de la prochaine case vide du tampon tandis que <code><span
-				    class="htex-ttt">ptr_output</span></code> donne l'indice de la
+			  <p>La variable <code class="language-shell">ptr_input</code> donne
+				l'indice de la prochaine case vide du tampon tandis que 
+				<code class="language-shell">ptr_output</code> donne l'indice de la
 				prochaine case pleine. Ces variables sont gérées comme des pointeurs
 				circulaires.</p>
 			  <ul>
-				<li>Prenez soin de ralentir le producteur (avec <code><span
-				      class="htex-ttt">sleep</span></code>) puis dans un deuxième temps
+				<li>Prenez soin de ralentir le producteur (avec 
+				<code class="language-shell">sleep</code>) puis dans un deuxième temps
 				  le consommateur pour tester tous les cas de figure (tampon vide ou
 				  tampon plein).</li>
 			  </ul>

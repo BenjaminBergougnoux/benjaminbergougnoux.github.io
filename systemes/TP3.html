@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Systèmes TP3</title>
+		<meta name="description" content="TP3 de l'UE Système d'exploitation">
+		<meta name="author" content="Benjamin Bergougnoux">
+		
+		<link rel="icon" type="image/png" href="logo.png" />
+		<link href="./../themes/prism.css" rel="stylesheet" />
+		<link href="./../themes/mystyle.css" rel="stylesheet">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+		
+		<script src="../prism.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script>
+		MathJax = {
+		tex: {
+		  inlineMath: [['$', '$'], ['\\(', '\\)']]
+		},
+		svg: {
+		  fontCache: 'global'
+		}
+		};
+		</script>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+
+
+	<body id="home" data-spy="scroll" data-target="#myNavBar" data-offset="1">
+	 	<div class="container pt-5 pb-3">
+		  <h1 id="htex-h1-1" class="htex" style="text-align: left;">TP n°3 : Threads et
+			sémaphores</h1>
+		  <div class="row">
+			<div class="col">
+			  <h2 class="htex"> </h2>
+			  <h2 id="thread" class="htex">Utilisation des <i>threads</i> Linux</h2>
+			  <p>Les threads de LINUX sont une implantation normalisée des P-threads
+				(threads Posix). Ces threads sont gérés à la fois par le système et par
+				une librairie au niveau utilisateur. Pour créer des threads, LINUX
+				applique la stratégie du <i>One-For-One</i> (une entrée dans la table
+				des processus pour chaque thread).</p>
+			  <h3 id="htex-h3-1" class="htex">Les fonctions disponibles</h3>
+			  <div class="not-card htex-code htex-copy prettyprint lang-c">Un extrait
+				des déclarations de <code><tt>&lt;pthread.h&gt;</tt></code>
+				<pre class="language-c">
+					<code class="language-c">
+	// Création d'un thread qui exécute la fonction spécifiée.
+	// avec l'argument prévu.
+	int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
+		void *(*start_function) (void *), void *arg);
+
+	// Suicide d'un thread.
+	void pthread_exit(void *return_value);
+
+	// Attendre la terminaison d'un thread.
+	int pthread_join(pthread_t thread, void **return_value);
+
+	// Envoyer un signal (UNIX) à un thread.
+	int pthread_kill(pthread_t thread, int sig);
+
+	// Abandonner la CPU pour la donner à un autre thread.
+	int sched_yield(void);
+					</code>
+				</pre>
+			  </div>
+			  <p>Bien entendu, une aide plus complète peut être obtenue sur chaque
+				fonction en utilisant le manuel UNIX : <code><span
+				    class="htex-ttt">man nom_de_fonction</span></code>.</p>
+			  <h3 id="htex-h3-2" class="htex">Un exemple</h3>
+			  <p>Cet exemple est la traduction d'un exercice de TP avec un thread qui
+				lit des caractères au clavier et les passe à un autre thread qui se
+				charge de les afficher. Il faut noter que le thread principal (le père)
+				se charge de la création de ses fils et de l'attente de leur mort. Cette
+				disparition est programmée à l'arrivée du caractère <span
+				  class="htex-ttt">EOF</span>.</p>
+			  <pre class="language-c"><code>
+		#include &lt;stdio.h&gt; 
+		#include &lt;stdlib.h&gt; 
+		#include &lt;pthread.h&gt; 
+		#include &lt;stdbool.h&gt;
+		#include &lt;ctype.h&gt;
+		#include &lt;assert.h&gt;
+
+
+		/*************************************************************
+		** Zone d'échange entre les threads:
+		** La valeur '\0' indique l'absence de donnée.
+		**************************************************************/
+		#define EMPTY      ('\0')
+		volatile int theChar = EMPTY; 
+
+
+		/*************************************************************
+		** Producteur: Lire l'entrée standard et, pour chaque
+		** caractère, donner le tour au consommateur.
+		**************************************************************/
+		void* read_stdin (void* _unused) {
+			int nb_chars = 0;
+			while (theChar != EOF) { 
+				while (theChar != EMPTY) {   /* attendre mon tour */
+				    /* rien à faire */
+				}
+				theChar = getchar();
+				nb_chars++;
+			}
+			
+			/* préparation d'un résultat (à titre d'exemple) */
+			int* result = malloc(sizeof(int));
+			assert(result != NULL);
+			*result = (nb_chars - 1);
+			return result;
+		} 
+
+
+		/*************************************************************
+		** Consommateur: Attendre son tour et, pour chaque caractère,
+		** l'afficher et donner le tour au producteur.
+		**************************************************************/
+		void* write_to_stdout (void* _unused) { 
+			unsigned long cpt = 0; 
+			while (true) {
+				while (theChar == EMPTY) {    /* attendre */
+				    cpt ++;
+				}
+				if (theChar == EOF) break;
+				theChar = toupper(theChar);
+				printf("cpt=%lu, car=%c\n", cpt, theChar); 
+				theChar = EMPTY;                /* donner le tour */ 
+			}
+			return NULL;
+		} 
+
+
+		/*************************************************************
+		** Créer les threads et attendre leurs terminaisons.
+		**************************************************************/
+		int main (void) { 
+			pthread_t read_thread, write_thread;
+			void *nb_chars;
+
+			/* Nous sommes optimistes, mais nous vérifions */
+			assert(pthread_create(&amp;read_thread, NULL, read_stdin, NULL) == 0);
+			assert(pthread_create(&amp;write_thread, NULL, write_to_stdout, NULL) == 0);
+			
+			/* nous attendons les threads fils */
+			assert(pthread_join(read_thread, &amp;nb_chars) == 0);
+			assert(pthread_join(write_thread, NULL) == 0);
+
+			printf("Fin du pere (%d caractères lus)\n", *((int*) nb_chars)) ;
+			free(nb_chars);
+			return (EXIT_SUCCESS);
+		}</code></pre>
+			  <p></p>
+			  <ul class="htex">
+				<li class="htex">Compiler et effectuer l'édition de liens avec la ligne
+				  suivante :
+				  <div class="not-card htex-code htex-copy prettyprint lang-sh">
+				    <code>gcc
+				      votre_programme.c -pthread -o votre_programme</code></div>
+				</li>
+				<li class="htex">Dans un autre console, vous pouvez utiliser la commande
+				  <code><span class="htex-ttt">ps -eLf</span></code> pour observer les
+				  <i>threads</i> créés par cet exemple.</li>
+				<li class="htex">Vérifiez la consommation de CPU en utilisant la
+				  commande <code><span
+				      class="htex-ttt">time votre_programme</span></code>.</li>
+				<li class="htex">Diminuez cette consommation de CPU en utilisant la
+				  fonction <code><span class="htex-ttt">usleep(100)</span></code> dans
+				  les boucles d'attente et vérifiez le résultat (avec la commande <span
+				    class="htex-ttt">time</span>).</li>
+			  </ul>
+			  <h2 id="sysc" class="htex">Utilisation des sémaphores</h2>
+			  <p><span style="color: rgb(0, 0, 0);">La librairie de gestion des
+				  <i>threads</i> offre les fonctions ci-dessous pour créer et utiliser
+				  des sémaphores. </span></p>
+			  <p><span style="color: rgb(91, 71, 179);"><strong>Attention</strong> : ces
+				  sémaphores sont propres à un processus. Ils permettent de synchroniser
+				  plusieurs threads entre eux, mais ils ne peuvent synchroniser
+				  plusieurs processus. Pour réaliser cette synchronisation il faut se
+				  tourner vers les sémaphores système V basés sur les IPC (<i>Inter
+				    Processus Communication</i>).</span></p>
+			  <h3 id="htex-h3-3" class="htex">Définition des fonctions</h3>
+			  <pre class="language-c"><code>
+		// Création d'un sémaphore et préparation d'une valeur initiale
+		int sem_init(sem_t *semaphore, int pshared, unsigned int valeur)
+
+		// Opération P sur un sémaphore.
+		int sem_wait(sem_t * semaphore);
+
+		// Version non bloquante de l'opération P sur un sémaphore.
+		int sem_trywait(sem_t * semaphore);
+
+		// Opération V sur un sémaphore.
+		int sem_post(sem_t * semaphore);
+
+		// Récupérer le compteur d'un sémaphore.
+		int sem_getvalue(sem_t * semaphore, int * sval);
+
+		// Destruction d'un sémaphore.
+		int sem_destroy(sem_t * semaphore);</code></pre>
+			  <p>Bien entendu, une aide plus complète peut être obtenue sur chaque
+				fonction en utilisant le manuel UNIX (<code><span class="htex-ttt">man
+				    nom_de_la_fonction</span></code>).</p>
+			  <h3 id="htex-h3-4" class="htex">Un exemple d'utilisation des sémaphores
+			  </h3>
+			  <p>Cet exemple illustre la mise en œuvre d'une section critique (mutuelle
+				exclusion) permettant d'éviter un mélange des affichages réalisés par
+				les deux threads.</p>
+			  <pre class="language-c"><code>
+		#include &lt;stdio.h&gt;
+		#include &lt;stdlib.h&gt;
+		#include &lt;pthread.h&gt;
+		#include &lt;semaphore.h&gt;
+		#include &lt;unistd.h&gt;
+		#include &lt;assert.h&gt;
+
+
+		sem_t mutex;
+
+
+		/*************************************************************
+		** Afficher (20 fois) une ligne composée de 40 chiffres.
+		**************************************************************/
+		void* affichage (void* ptr_num) {
+			int num = *((int*) ptr_num);
+			
+			for(int i = 0; i &lt; 20; i++) {
+				sem_wait(&amp;mutex); /* prologue */
+				    for(int j=0; j&lt;20; j++) printf("%d",num);
+				    sleep(1); /* pour être sur d'avoir des problèmes */
+				    for(int j=0; j&lt;20; j++) printf("%d",num);
+				    printf("\n");
+				    fflush(stdout);
+				sem_post(&amp;mutex); /* épilogue */
+				sleep(1);
+			}
+			return NULL;
+		}
+
+
+		/*************************************************************
+		** Initialiser le sémaphore, créer les deux threads et
+		** attendre leurs terminaisons.
+		**************************************************************/
+		int main (void) {
+			pthread_t th0, th1;
+			int num0 = 0, num1 = 1;
+			
+			/* ce qui compte est le 1 : valeur initiale du compteur */
+			sem_init(&amp;mutex, 0, 1);
+			
+			assert(pthread_create(&amp;th0, NULL, affichage, &amp;num0) == 0);
+			assert(pthread_create(&amp;th1, NULL, affichage, &amp;num1) == 0);
+
+			assert(pthread_join(th0, NULL) == 0);
+			assert(pthread_join(th1, NULL) == 0);
+
+			return (EXIT_SUCCESS);
+		}
+		</code></pre>
+			  <h4 class="htex htex-code htex-copy prettyprint lang-c prettyprinted"> 
+			  </h4>
+			  <ul class="htex">
+				<li class="htex">Compiler et effectuer l'édition de liens avec la ligne
+				  suivante :<br><code>gcc votre_programme.c -pthread -o
+				    votre_programme</code></li>
+				<li class="htex">Vérifier que le mécanisme d'exclusion mutuelle est bien
+				  nécessaire (commentez l'appel des fonctions <span
+				    class="htex-ttt">sem_wait</span> et <span
+				    class="htex-ttt">sem_post</span>).</li>
+				<li class="htex">Si vous supprimez l'appel à <span
+				    class="htex-ttt">sleep</span> dans la section critique quel est le
+				  résultat ? Avez-vous une explication ?</li>
+			  </ul>
+			  <h2 class="htex"> </h2>
+			  <h2 id="prod-conso" class="htex">Sémaphore, producteur et consommateur
+			  </h2>
+			  <p></p>
+			  <h3 id="htex-h3-5" class="htex">Un tampon d'un caractère</h3>
+			  <ul>
+				<li>Reprenez le premier exemple des threads (échange de caractère) et
+				  remplacez la boucle d'attente active (sur la valeur <tt>'\0'</tt>) par
+				  deux sémaphores pour implanter un schéma producteur consommateur (le
+				  tampon est constitué d'un seul caractère). Rappel du schéma
+				  producteur/consommateur :</li>
+			  </ul>
+			  <pre class="language-clike"><code> NPlein : sémaphore := (0, {});
+		  NVide  : sémaphore := (n, {});  // Taille du tampon
+		</code></pre>
+			  <div class="container-fluid pt-2 pb-3">
+				<div class="row">
+				  <div class="col">
+				    <p>Algorithme du producteur :</p>
+				    <div class="not-card htex-code">
+				      <pre class="language-clike"><code>
+	Pour toujours faire
+		P(NVide);
+		&lt; produire &gt;
+		&lt; déposer dans le tampon &gt;
+		V(NPlein);
+	Fin-pour
+	</code></pre>
+				      <pre id="htex-pre-8" class="htex htex-code"
+				        xml:space="preserve"></pre>
+				    </div>
+				  </div>
+				  <div class="col">
+				    <p>Algorithme du Consommateur :</p>
+				    <div class="not-card htex-code">
+				      <pre class="language-clike"><code>
+	Pour toujours faire
+		P(NPlein);
+		&lt; retirer du tampon &gt;
+		&lt; consommer &gt;
+		V(NVide);
+	Fin-pour
+		</code></pre>
+				    </div>
+				  </div>
+				</div>
+			  </div>
+			  <h3 id="htex-h3-6" class="htex">Un tampon réaliste</h3>
+			  <ul>
+				<li>Modifiez l'exemple précédent pour avoir maintenant un tampon d'une
+				  dizaine de caractères.</li>
+			  </ul>
+			<pre class="language-c"><code>
+		#define BUFFER_SIZE         (10)
+		char buffer[ BUFFER_SIZE ];
+		int ptr_input = 0;
+		int ptr_output = 0;
+			</code></pre>
+			  <p>La variable <code><span class="htex-ttt">ptr_input</span></code> donne
+				l'indice de la prochaine case vide du tampon tandis que <code><span
+				    class="htex-ttt">ptr_output</span></code> donne l'indice de la
+				prochaine case pleine. Ces variables sont gérées comme des pointeurs
+				circulaires.</p>
+			  <ul>
+				<li>Prenez soin de ralentir le producteur (avec <code><span
+				      class="htex-ttt">sleep</span></code>) puis dans un deuxième temps
+				  le consommateur pour tester tous les cas de figure (tampon vide ou
+				  tampon plein).</li>
+			  </ul>
+			</div>
+			<div class="col">
+			  <div class="card htex-toc">
+				<div class="card-header p-1 lp-2 htex-bg-blue">Sommaire</div>
+				<ul class="list-group list-group-flush no-htex">
+				  <li class="list-group-item pt-1 pb-0 ps-1"><a
+				      href="#thread">Utilisation des <i>threads</i> Linux</a></li>
+				  <li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-1">Les
+				      fonctions disponibles</a></li>
+				  <li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-2">Un
+				      exemple</a></li>
+				  <li class="list-group-item pt-1 pb-0 ps-1"><a href="#sysc">Utilisation
+				      des sémaphores</a></li>
+				  <li class="list-group-item pt-1 pb-0 ps-3"><a
+				      href="#htex-h3-3">Définition des fonctions</a></li>
+				  <li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-4">Un
+				      exemple d'utilisation des sémaphores</a></li>
+				  <li class="list-group-item pt-1 pb-0 ps-1"><a
+				      href="#prod-conso">Sémaphore, producteur et consommateur</a></li>
+				  <li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-5">Un
+				      tampon de un caractère</a></li>
+				  <li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-6">Un
+				      tampon réaliste</a></li>
+				</ul>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	</body>
+</html>

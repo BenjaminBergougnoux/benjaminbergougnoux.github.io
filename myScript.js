@@ -5,6 +5,94 @@ var baniere = new Vue({
   }
 });
 
+var collegues = new Vue({
+  el: '#colleguelist',
+  data: {
+    listCollegues: [
+    	{
+    		name:"Vera Checkan",
+    		website:"https://www.informatik.hu-berlin.de/de/org/mitarbeiter/1694103",
+    	},
+    	{
+    		name:"Oscar Defrain",
+    		website:"https://pageperso.lis-lab.fr/~oscar.defrain/misc.html",
+    	},
+    	{ name:"Fionn Mc Inerney",
+		  website:"https://sites.google.com/view/fionn-mc-inerney/"
+		},
+		{ name:"Lars Jaffke",
+		  website:"https://lars-jaffke.github.io/"
+		},
+		{ name:"Jonas Sénizergues",
+		  website:"https://www.labri.fr/perso/jsenizergues/"
+		},
+		{ name:"O-joung Kwon",
+		  website:"http://ojkwon.com/"
+		},
+		{ name:"Thomas Bellitto",
+		  website:"https://webia.lip6.fr/~bellitto/"
+		},
+		{ name:"Mamadou Moustapha Kanté",
+		  website:"https://perso.isima.fr/~makante/"
+		},
+		{ name:"Kunihiro Wasa",
+		  website:"https://wasa.ws.hosei.ac.jp/"
+		},
+		{ name:"Florent Capelli",
+		  website:"http://researchers.lille.inria.fr/~fcapelli/index_en.html"
+		},
+		{ name:"Édouard Bonnet",
+		  website:"https://perso.ens-lyon.fr/edouard.bonnet/"
+		},
+		{ name:"Nick Brettell",
+		  website:"https://homepages.ecs.vuw.ac.nz/~bretteni/"
+		},
+		{ name:"Svein Høgemo",
+		  website:"https://scholar.google.com/citations?user=HfixjTsAAAAJ&hl=en"
+		},
+		{ name:"Jan Arne Telle ",
+		  website:"https://www.ii.uib.no/~telle/"
+		},
+		{ name:"Christophe Paul",
+		  website:"https://www.lirmm.fr/christophe-paul/"
+		},
+		{ name:"Eduard Eiben",
+		  website:"https://pure.royalholloway.ac.uk/en/persons/eduard-eiben"
+		},
+		{ name:"Robert Ganian",
+		  website:"https://www.ac.tuwien.ac.at/people/rganian/"
+		},
+		{ name:"Sebastian Ordyniak",
+		  website:"https://eps.leeds.ac.uk/computing/staff/8786/dr-sebastian-ordyniak"
+		},
+		{ name:"M. S. Ramanujan",
+		  website:"https://msramanujan.weebly.com/"
+		},
+		{ name:"Charis Papadopoulos",
+		  website:"https://www.cs.uoi.gr/~charis/"
+		},
+		{ name:"Martin Vatshelle",
+		  website:"https://www.ii.uib.no/~martinv/"
+		},
+		{ name:"Jan Dreier",
+		  website:"https://www.ac.tuwien.ac.at/people/dreier/"
+		},
+		{ name:"Tuukka Korhonen",
+		  website:"https://tuukkakorhonen.com/"
+		},
+		{ name:"Jesper Nederlof",
+		  website:"https://webspace.science.uu.nl/~neder003/"
+		},
+		{ name:"Michał Pilipczuk",
+		  website:"https://www.mimuw.edu.pl/~mp248287/"
+		},
+		{ name:"Sang-il Oum",
+		  website:"https://dimag.ibs.re.kr/home/sangil/"
+		},
+    ]
+  }
+});
+
 var app = new Vue({
   el: '#publilist',
   methods: {
@@ -103,7 +191,7 @@ var app = new Vue({
           {
               id:'BKR2023',
               title:"New Width Parameters for Independent Set: One-sided-mim-width and Neighbor-depth",
-              authors:"with Tuukka Korhonen, Igor Razgon.",
+              authors:"with T. Korhonen, I. Razgon.",
               conf:"WG 2023",
               journal:"",
               comment:"",

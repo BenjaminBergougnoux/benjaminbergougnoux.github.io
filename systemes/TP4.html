@@ -52,30 +52,20 @@
 				<div class="card htex-toc">
 					<div class="card-header p-1 lp-2 htex-bg-blue">Sommaire</div>
 					<ul class="list-group list-group-flush no-htex">
-						<li class="list-group-item pt-1 pb-0 ps-1"><a href="#thread">Utilisation des <i>threads</i>
-								Linux</a></li>
-						<li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-1">Les
-								fonctions disponibles</a></li>
-						<li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-2">Un
-								exemple</a></li>
-						<li class="list-group-item pt-1 pb-0 ps-1"><a href="#sysc">Utilisation
-								des sémaphores</a></li>
-						<li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-3">Définition des fonctions</a>
-						</li>
-						<li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-4">Un
-								exemple d'utilisation des sémaphores</a></li>
-						<li class="list-group-item pt-1 pb-0 ps-1"><a href="#prod-conso">Sémaphore, producteur et
-								consommateur</a></li>
-						<li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-5">Un
-								tampon de un caractère</a></li>
-						<li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-6">Un
-								tampon réaliste</a></li>
-					</ul>
+						<li class="list-group-item pt-1 pb-0 ps-1"><a href="#cond-synchro">Les conditions de
+						synchronisation</a></li>
+						<li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h2-1">Présentation</a></li>
+						<li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-1">Un exemple</a></li>
+						<li class="list-group-item pt-1 pb-0 ps-1"><a href="#htex-h2-2">Les philosophes et les
+						spaghettis</a></li>
+						<li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-3">Présentation</a></li>
+						<li class="list-group-item pt-1 pb-0 ps-3"><a href="#htex-h3-4">Comment faire ?</a></li>
+					  </ul>
 				</div>
 			</div>
 			<div class="col-lg-8">
-				<h2 class="htex">Les conditions de synchronisation</h2>
-				<h2 id="thread" class="htex">Présentation</h2>
+				<h2 class="cond-synchro">Les conditions de synchronisation</h2>
+				<h2 id="htex-h2-1" class="htex">Présentation</h2>
 				<p>Nous avons présenté dans le cours les <strong>régions critiques</strong> basées sur l'attente d'une <strong>condition de
 					synchronisation</strong> :</p>
 				<pre class="language-c">
@@ -91,7 +81,7 @@
 					avec les <code class="language-shell">pthread_cond_t</code>.
 					Ces conditions s'utilisent toujours avec un verrou
 					(<code class="language-shell">pthread_mutex_t</code>).</p>
-				<h3 id="htex-h3-2" class="htex">Un exemple</h3>
+				<h3 id="htex-h3-1" class="htex">Un exemple</h3>
 				<p>
 					Un extrait de </pthread.h><code class="language-shell">&lt;pthread.h&gt;</code> :
 				</p>
@@ -204,8 +194,8 @@
 						 (<strong>Indice</strong> : décrémenter le nombre de peintre lors d'un départ
 						  et enrichir la condition de synchronisation avec un test sur le nombre de peintres).</li>
 				</ul>
-				<h2 id="sysc" class="htex">Des philosophes et des spaghettis</h2>
-				<h3 id="sysc" class="htex">Présentation</h3>
+				<h2 id="htex-h2-2" class="htex">Des philosophes et des spaghettis</h2>
+				<h3 id="htex-h3-3" class="htex">Présentation</h3>
 				<p>
 					Nous retrouvons dans un restaurant <code class="language-c">N</code> philosophes attablés pour
 					manger un
@@ -229,7 +219,7 @@
 					Dans la suite, on vous demande d'écrire un programme qui simule l'activité des philosophes
 					pour régler le partage des fourchettes. Commencez avec deux puis 5 ou 6 philosophes.
 				</p>
-				<h4 class="htex htex-code htex-copy prettyprint lang-c prettyprinted">Comment faire ?</h4>
+				<h4 id="htex-h3-4" class="htex htex-code htex-copy prettyprint lang-c prettyprinted">Comment faire ?</h4>
 				<p>
 					On vous donne les indications suivantes :
 				</p>

@@ -124,8 +124,7 @@
         
 
         <ul class="list-group list-group-flush">
-        <template  v-for="(year, i) in years">
-          <template v-for="(item, index) in year.publications">
+          <template v-for="(item, index) in publications">
 
             <li v-bind:class="[item.journal ? 'journal' : [item.conf ? 'conf' : 'incoming']]" class="list-group-item">
               <b class="title">{{item.title}}</b></br>
@@ -337,7 +336,7 @@ bibsource = {dblp computer science bibliography, https://dblp.org}
 
 
         <div class="container-fluid bg-dark text-white text-center py-3">
-          Image: Benjamin Bergougnoux. This website uses Bootstrap 5, MathJax and Vue.js 2.
+          Photos: Benjamin Bergougnoux. This website uses Bootstrap 5, MathJax and Vue.js 2.
         </div>
 
         <script src="myScript.js"></script>

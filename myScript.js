@@ -146,6 +146,63 @@ var app = new Vue({
       //   abstract: ''
       // },
       {
+        id: 'BCS26',
+        title: "A Logic-based Algorithmic Meta-Theorem for Treedepth: Single Exponential FPT Time and Polynomial Space",
+        authors: "with V. Chekan and G. Stamoulis",
+        conf: "Accepted at SODA 2026",
+        journal: "",
+        comment: "Soon on arXiv",
+        openacess: "",
+        pdf: "",
+        bibtex: "",
+        presentations: [
+          // {
+          //   place: "",
+          //   slides: "",
+          //   video: ""
+          // }
+        ],
+        abstract: 'For a graph $G$, the parameter treedepth measures the minimum depth among all forests $F$, called elimination forests, such that $G$ is a subgraph of the ancestor-descendant closure of $F$. We introduce a logic, called neighborhood operator logic with acyclicity, connectivity and clique constraints ($\\mathsf{NEO}_2[\\mathsf{FRec}]+\\mathsf{ACK}$ for short), that captures all NP-hard problems---like Independent Set or Hamiltonian Cycle---that are known to be tractable in time $2^{O(td)}n^{O(1)}$ and space $n^{\\mathcal{O}(1)}$ on $n$-vertex graphs provided with elimination forests of depth $td$. We provide a model checking algorithm for $\\mathsf{NEO}_2[\\mathsf{FRec}]+\\mathsf{ACK}$ with such complexity that unifies and extends these results. For $\\mathsf{NEO}_2[\\mathsf{FRec}]+\\mathsf{K}$, the fragment of the above logic that does not use acyclicity and connectivity constraints, we get a strengthening of this result, where the space complexity is reduced to $O(td\\log(n))$. <br> With a similar mechanism as the distance neighborhood logic introduced in [Bergougnoux, Dreier and Jaffke, SODA 2023], the logic $\\mathsf{NEO}_2[\\mathsf{FRec}]+\\mathsf{ACK}$ is an extension of the fully-existential $\\mathsf{MSO}_2$ with predicates for (1) querying generalizations of the neighborhoods of vertex sets, (2) verifying the connectivity and acyclicity of vertex and edge sets, and (3) verifying that a vertex set induces a clique. Interestingly, $\\mathsf{NEO}_2[\\mathsf{FRec}]$, the fragment of $\\mathsf{NEO}_2[\\mathsf{FRec}]+\\mathsf{K}$ that does not use clique constraints, is equivalent (up to minor features) to a variant of modal logic---introduced in [Pilipczuk, MFCS 2011]---that captures many problems known to be tractable in single exponential time when parameterized by treewidth. Our results provide $2^{O(td)}n^{O(1)}$ time and $n^{\\mathcal{O}(1)}$ space algorithms for problems for which the existence of such algorithms was previously unknown. In particular, $\\mathsf{NEO}_2[\\mathsf{FRec}]$ captures CNF-SAT via the incidence graphs associated to CNF formulas, and it also captures several modulo counting problems like Odd Dominating Set. <br> To prove our results, we extend the applicability of  algebraic transforms such as the inclusion-exclusion principle and the discrete Fourier transform. To our knowledge, this is the first time, the discrete Fourier transform have been used to obtain space-efficient algorithms on graphs of bounded treedepth. To achieve the logspace complexity for $\\mathsf{NEO}_2[\\mathsf{FRec}]+\\mathsf{K}$, we also use the technique from [Pilipczuk and Wrochna, ACM Trans. Comput. Theory 2018] based on Chinese remainder theorem.'
+        },
+      {
+        id: 'BHLJ25',
+        title: "On Algorithmic Applications of $\\mathcal{F}$-Branchwidth",
+        authors: "with T. Hamm, P. T. Lima and L. Jaffke",
+        conf: "ESA 2025",
+        journal: "",
+        comment: "Soon on arXiv",
+        openacess: "",
+        pdf: "",
+        bibtex: "",
+        presentations: [
+          // {
+          //   place: "",
+          //   slides: "",
+          //   video: ""
+          // }
+        ],
+        abstract: '$\\mathcal{F}$-branchwidth is a framework for width measures of graphs, recently introduced by Eiben et al. [ITCS 2022], that captures tree-width, co-tree-width, clique-width, and mim-width, and several of their generalizations and interpolations. In this work, we search for algorithmic applications of $\\mathcal{F}$-branchwidth measures that do not have an equivalent counterpart in the literature so far.  Our first contribution is a minimal set of eleven $\\mathcal{F}$-branchwidth measures such that each of the infinitely many $\\mathcal{F}$-branchwidth measures is equivalent to one of the eleven. We observe that for the FO Model Checking problem, each $\\mathcal{F}$-branchwidth is either equivalent to clique-width (and therefore has an FPT-algorithm by formula length plus the width) or the problem remains as hard as on general graphs even on graphs of constant width. Next, we study the number of equivalence classes of the neighborhood equivalence in a decomposition, which upper bounds the run time of the model checking algorithm  for $\\mathsf{A\\& C\\ DN}$ logic recently introduced by Bergougnoux et al. [SODA 2023]. We give structural lower bounds that show that for each $\\mathcal{F}$-branchwidth, an efficient model checking algorithm was already known or cannot be obtained via this method. Lastly, we classify the complexity of Independent Set parameterized by any $\\mathcal{F}$-branchwidth  except for one open case. Also here, our contributions are lower bounds.  In this context, we also prove that Independent Set  on graphs of mim-width $w$ cannot be solved in time $n^{o(w)}$ unless  the Exponential Time Hypothesis fails,  answering an open question in the literature.'
+        },
+      {
+        id: 'BJ2025',
+        title: "Hamiltonicity Parameterized by Mim-Width is (Indeed) Para-NP-Hard",
+        authors: "with L. Jaffke",
+        conf: "IPEC 2025",
+        journal: "",
+        comment: "",
+        openacess: "https://arxiv.org/abs/2507.00612",
+        pdf: "https://arxiv.org/abs/pdf/2507.00612",
+        bibtex: "",
+        presentations: [
+          // {
+          //   place: "",
+          //   slides: "",
+          //   video: ""
+          // }
+        ],
+        abstract: 'We prove that Hamiltonian Path and Hamiltonian Cycle are NP-hard on graphs of linear mim-width $\\mathsf{mim}$, even when a linear order of the input graph with mim-width $\\mathsf{mim}$ is provided together with input. This fills a gap left by a broken proof of the para-NP-hardness of  Hamiltonicity problems parameterized by mim-width.'
+      },
+      {
         id: 'BBD25',
         title: "Mim-Width is paraNP-complete",
         authors: "with E. Bonnet and J. Duron",

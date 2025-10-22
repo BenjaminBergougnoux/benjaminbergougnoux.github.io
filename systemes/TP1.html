@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Systèmes TP1</title>
+	<meta name="description" content="TP1 de l'UE Système d'exploitation">
+	<meta name="author" content="Benjamin Bergougnoux">
+
+	<link rel="icon" type="image/png" href="logo.png" />
+	<link href="./../themes/prism.css" rel="stylesheet" />
+	<link href="./../themes/a11y-dark-legacy.css" rel="stylesheet" />
+	<link href="./../themes/mystyle.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+	<script src="../prism.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+		MathJax = {
+			tex: {
+				inlineMath: [['$', '$'], ['\\(', '\\)']]
+			},
+			svg: {
+				fontCache: 'global'
+			}
+		};
+	</script>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+
+<body id="home" data-spy="scroll" data-target="#myNavBar" data-offset="1" data-prismjs-copy="Copier"
+	data-prismjs-copy-error="Copie : erreur" data-prismjs-copy-success="Copie : succès!">
+	<div class="container pt-5 pb-3">
+		<h1 id="htex-h1-1" class="htex" style="text-align: left;">TP n°1 : Simulation d'un processeur et d'un système</h1>
+		<p>
+			TP évalué à effectuer seul⋅e ou en binôme. Le TP n°2 sera une suite de celui-çi. 		
+		</p>
+		<p>
+			L'évaluation se fait avant tout pendant la séance.
+			Pensez à faire valider votre progression en appelant votre intervenant TP, les étapes qu'il faut valider sont indiquées.
+			N'hésitez pas à demander de l'aide à votre intervenant si vous bloquez !
+		</p>
+		<div class="row">
+			<div class="col-lg-4 order-lg-5">
+				<div class="card htex-toc">
+					<div class="card-header p-1 lp-2 htex-bg-blue">Sommaire</div>
+					<ul class="list-group list-group-flush no-htex">
+						<li class="list-group-item pt-1 pb-0 ps-1"><a href="#presentation">1 - Présentation de la machine</i></a></li>
+						<li class="list-group-item pt-1 pb-0 ps-1"><a href="#nouvellesfonctions">2 - Nouvelles fonctions à réaliser</i></a></li>
+						<li class="list-group-item pt-1 pb-0 ps-1"><a href="#multitache">3 - Introduction du multi-tâches</i></a></li>
+						<li class="list-group-item pt-1 pb-0 ps-1"><a href="#appelsysteme">4 - Les appels systèmes</i></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-8 py-3">
+				<h2 id="presentation" class="htex">1 - Présentation de la machine</h2>
+				<p>Pour suivre ce TP vous devez récupérer le prototype du simulateur 1 qui est mis à votre disposition. 
+					Ce prototype a la structure suivante :</p>
+					<ul>
+						<li>
+							<code >cpu.c</code> et <code >cpu.h</code> : définition de la CPU et de la mémoire.
+						</li>
+						<li>
+							<code >systeme.c</code> et <code >systeme.h</code> : définition du système.
+						</li>
+						<li>
+							<code >asm.c</code> : un mini-assembleur.
+						</li>
+						<li>
+							<code >simul.c</code> : fonction principale (fait office de main.c).
+						</li>
+						<li>
+							<code >prog1.asm</code> : un exemple de programme assembleur.
+						</li>
+					</ul>
+					<div class="py-2">
+						<h3 class="htex">1.1 - Mémoire centrale</h3>
+						<p>
+							La mémoire centrale de notre machine est composée de mots. Un mot mémoire est un entier de 32 bits (la taille
+							des entiers sur une architecture PC classique). La mémoire contient quelques dizaines de mots simulés par un
+							simple tableau. Les adresses physiques sont contiguës et varient de zéro à 127.
+						</p>
+						<div class="not-card htex-code htex-copy prettyprint">
+							Un extrait des déclarations de <code>cpu.c</code> et <code>cpu.h</code>.
+							<pre class="language-c">
+								<code class="language-c">
+	typedef int WORD; /* un mot est un entier 32 bits */
+
+	WORD mem[128]; /* mémoire */
+
+	/* fonctions de lecture / écriture */
+	WORD read_mem(int physical_address);
+	void write_mem(int physical_address, WORD value);</code>
+							</pre>
+						</div>
+					</div>
+				<div class="py-2">
+					<h3 class="htex">1.2 - Structure du processeur</h3>
+					<p>Le mot d'état du processeur est défini comme suit :</p>
+					<div class="not-card htex-code htex-copy prettyprint lang-c">
+						<pre class="language-c">
+						<code class="language-c">
+	typedef struct PSW { /* Processor Status Word */
+	WORD PC;
+	/* Program Counter */
+	WORD AC;
+	/* Accumulator */
+	WORD IN;
+	/* Interrupt number */
+	INST RI;
+	/* Registre instruction */
+	INST IO;
+	/* input/output data */
+	} PSW;</code>
+					</pre>
+					</div>
+					<p>Définition des registres :
+					</p>
+					<ul>
+						<li>
+							<code>PC</code> : Le <b>Program Counter</b> (compteur ordinal) est un pointeur sur la prochaine instruction à exécuter (en
+	fait un entier).
+						</li>
+						<li>
+							<code>AC</code> : Le processeur dispose d'un registre unique (<b>l'accumulateur</b>) pouvant contenir un entier signé de
+	32 bits et sur lequel se déroule les opérations de base.
+						</li>
+						<li>
+							<code>IN</code> : En cas d'interruption, la CPU range dans ce registre la cause de cette interruption. Cette information
+	peut être exploitée par le système d'exploitation.
+						</li>
+						<li>
+							<code>RI</code> : Instruction qui est en cours d'exécution.
+						</li>
+						<li>
+							<code>IO</code> : Registre de communication pour les entrées/sorties.
+						</li>
+					</ul>
+				</div>
+				<div class="py-2">
+					<h3>1.3 - Instructions du processeur</h3>
+					<p>Notre processeur exécute des instructions à taille fixe (un mot de 32 bits). Une instruction est composée d'un
+code opération, de deux numéros de registre et d'un argument. Vous pouvez voir les détails ci-dessous :</p>
+					<h5>Définition d'une instruction</h5>
+					<pre class="language-c">
+						<code class="language-c">
+	typedef struct {
+		short op;
+		/* code operation (16 bits) */
+		short arg;
+		/* argument (16 bits)
+		*/
+	} INST;</code>
+					</pre>
+					<p>Une instruction va ressembler à ceci : <code>add 1000</code> (une action et un argument). Les instructions disponibles sont
+détaillées ci-dessous :</p>
+					<h5>Les instructions de notre CPU</h5>
+					<pre class="language-c">
+						<code>
+	set arg // AC = arg; PC++
+	add arg // AC = AC + mem[arg]; PC++
+	sub arg // AC = AC - mem[arg]; PC++
+	load adr // AC = mem[ adr ]; PC++
+	store adr // mem[ adr ] = AC; PC++
+	nop // PC++
+	ifeq adr // PC++; si (AC == 0) PC = adr
+	ifgt adr // PC++; si (AC > 0) PC = adr
+	iflt adr // PC++; si (AC < 0) PC = adr
+	jump adr // PC = adr
+	sysc arg // PC++; appel du système</code>
+					</pre>
+					<p>
+						Un programme en assembleur est une séquence d'instructions. En voila un exemple (voir prog1.asm ) :
+					</p>
+					<h5>Une boucle avec diminution de AC par pas de 2000</h5>
+					<pre class="language-c">
+						<code>
+set 3000                    // AC = 3000
+loop:                           // définir loop
+    iflt end                    // si (AC < 0) aller à end
+    sub incr                    // AC = AC - mem[ incr ]
+    nop                         // ne rien faire
+    jump loop                   // aller à loop
+end:
+    jump end                    // boucle infinie
+
+incr: data 200                  // valeur de l'increment</code>
+					</pre>
+				</div>
+				<div class="py-2">
+					<h3>1.4 - Simulation de la machine</h3>
+					<p>Nous avons vu en cours que le processeur passe son temps à alterner des cycles ou il exécute du code utilisateur
+et des cycles ou il exécute du code système. Elle passe du code utilisateur au code système par une interruption et
+du code système au code utilisateur par un chargement du mot d'état processeur (ou <b>Processor Status Word</b>).
+On peut donc simuler ce comportement par le code ci-dessous :</p>
+					<pre class="language-c">
+						<code>
+int main(void) {
+	PSW cpu = system_init();
+	for(;;) {
+	cpu = simulate_cpu(cpu);
+	cpu = process_interrupt(cpu);
+	}
+	return (EXIT_SUCCESS);
+}</code>
+					</pre>
+					<p>La fonction simulate <code>cpu()</code> simule l'exécution du code utilisateur jusqu'à l'apparition d'une interruption. La
+fonction <code>process_interrupt()</code> reprends la main, traite l'interruption et redonne la main au code utilisateur.</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-8 py-3">
+			<h2 id="nouvellesfonctions">2 - Nouvelles fonctions à réaliser</h2>
+			<div class="py-2">
+				<h3>2.1 - Démarrer le simulateur</h3>
+				<ol>
+					<li>
+						Téléchargez l'archive <code>simul.zip</code> <a href="./simul.zip">ici</a>.
+					</li>
+					<li>
+						Décompressez l'archive :
+						<pre class="language-c">
+							<code>
+$ unzip simul.zip
+$ cd simul</code>
+						</pre>
+					</li>
+					<li>
+						Compilez le projet :
+						<pre class="language-c">
+							<code>
+$ cd simul
+$ make</code>
+						</pre>
+					</li>
+					<li>
+						Exécutez le simulateur :
+						<pre class="language-c">
+							<code>
+$ ./simul</code>
+						</pre>
+					</li>
+					<li>
+						Pour recompilez le simulateur, il suffit de faire :
+						<pre class="language-c">
+							<code>
+$ make clean
+$ make
+$ ./simul</code>
+						</pre>
+					</li>
+				</ol>
+			</div>
+			<div class="py-2">
+				<h3>2.2 - Tracer les interruptions</h3>
+				<ol>
+					<li>
+						<p>
+							Pour l'instant le simulateur fonctionne sans rien afficher. Enlevez les commentaires associés
+							 à l'interruption <code>TRACE</code> dans la fonction process interrupt du fichier <code>system.c</code> . 
+							L'affichage ( <code>dump cpu</code> ) et l'attente ( <code>sleep</code> ) devraient vous permettre de suivre et 
+							de comprendre le fonctionnement du programme ( <code>prog1.asm</code> ).
+						</p>
+					</li>
+					<li>
+						<p>
+							Faites en sorte que le système indique les numéros d'interruption reçus (fonction <code>process_interrupt</code> de <code>system.c</code> à modifier).
+						</p>
+					</li>
+					<li>
+						<p>
+							Faites en sorte que les interruptions d'erreur (instruction inconnue <code>INT INST</code> et erreur d'adressage <code>INT SEGV</code> ) provoque l'arrêt du simulateur (donc un appel à <code>exit()</code> ). 
+							Essayez (sans trop perdre de temps là-dessus) de modifiez le programme exécuté pour faire apparaı̂tre une des deux erreurs (revenez ensuite à la version d'origine).
+							 <i>Indication :</i> pour provoquer une <code>INT INST</code> sans que l'assembleur la détecte, il faut jouer avec <code>DATA</code>
+						</p>
+					</li>
+				</ol>
+			</div>
+			<div class="py-2">
+				<h3>2.3 - Appels système</h3>
+				<p>
+					Pour l'instant les affichages de notre simulateur sont réalisés par les traces du <b>PSW</b> faites par le système. Il est
+					temps maintenant d'utiliser une nouvelle instruction, que nous appellerons <code>sysc</code>, dont le but est de générer une
+					interruption afin de donner la main au système. La partie argument de cette instruction indiquera au système
+					l'action voulue.
+				</p>
+				<h5>Préparation :</h5>
+				<ul>
+					<li>
+						Consultez les numéros d'interruption prévus dans <code>cpu.h</code>.
+					</li>
+					<li>
+						Analysez le contenu de la fonction <code>system_call</code> qui assure le traitement des appels au système.
+					</li>
+					<li>
+						Testez le fonctionnement en plaçant une instruction <code>sysc</code> au coeur de la boucle.
+					</li>
+				</ul>
+				<h5>Traitement de l'appel système EXIT :</h5>
+				<ul>
+					<li>
+						<p>
+							Cet appel provoque l'arrêt du thread demandeur et donc du système puisque nous avons, pour l'instant, un seul thread.
+						</p>
+					</li>
+					<li>
+						<p>Définir les deux macros ci-dessous dans votre programme en assembleur :</p>
+						<pre class="lang-c">
+							<code>
+define SYSC_EXIT 100
+define SYSC_PUTI 200</code>
+						</pre>
+					</li>
+					<li>
+						<p>
+							Remplacer dans le code du programme assembleur l'instruction jump end (la boucle infinie) par l'instruction d'appel au système ci-dessous.
+						</p>
+				 		<pre class="lang-c">
+							<code>
+sysc SYSC_EXIT
+// Appel au système pour SYSC_EXIT</code>
+						</pre>
+					</li>
+					<li>
+						<p>
+							Compléter la fonction <code>sysc exit</code>.
+						</p>
+					</li>
+				</ul>
+				<h5>Traitement de l'appel système PUTI :</h5>
+				<ul>
+					<li>
+						<p>
+							Cet appel provoque l'affichage de l'entier stocké dans <b>l'accumulateur</b>.
+						</p>
+					</li>
+					<li>
+						<p>
+							Compléter la fonction <code>sysc_puti</code>.
+						</p>
+					</li>
+					<li>
+						<p>
+							Placer cette instruction au coeur de la boucle et voir le déroulement de la boucle.
+						</p>
+					</li>
+				</ul>
+				<h4>Faites valider votre progression par votre intervenant TP</h4>
+			</div>
+		</div>
+		<div class="col-lg-8 py-3">
+				<h2 id="multitache">3 - Introduction du multi-tâches</h3>
+				<p>Le but de cette section est double : d'une part, ajouter des fonctions multi-tâches en temps partagé à notre mini
+système et d'autre part, utiliser ces nouvelles fonctions pour endormir les threads pendant un certain temps
+				</p>
+				<div class="py-2">
+					<h3>3.1 - Codage des threads</h3>
+					<p>
+						Nous avions déjà prévu dans le simulateur fourni, les structures de données ci-dessous. Elles permettent de
+représenter un ensemble de threads et leur mot d'état processeur.
+					</p>
+					<pre class="lang-c">
+						<code>
+#define MAX_THREADS (20) /* nb maximum de threads */
+typedef enum {
+	EMPTY = 0, /* thread inexistant */
+	READY = 1, /* thread prêt */
+} STATE; /* État d'un thread */
+
+typedef struct {
+	PSW cpu; /* mot d'état du thread */
+	STATE state; /* état du thread */
+} PCB; /* Un Process Control Block */
+
+PCB thread[MAX_THREADS]; /* table des threads*/
+int current_thread = -1; /* numéro du thread courant*/</code>
+					</pre>
+					<p>
+						Faites en sorte qu'au démarrage du système (fonction <code>system_init</code>), 
+						le système prépare la première case du
+						tableau des threads. Il y a pour l'instant un seul thread.
+					</p>
+				</div>
+				<div class="py-2">
+					<h3>3.2 - Un ordonnanceur simplifié</h3>
+					<p>
+						A chaque interruption <code>TRACE</code>, le système va maintenant sauvegarder le <b>PSW</b> dans la case correspondante du
+						tableau des threads et chercher un nouveau thread prêt pour lui redonner le processeur 
+						(voir recherche ci-dessous).
+					</p>
+					<h5>Fonction de l'ordonnanceur :</h5>
+					<pre class="lang-c">
+						<code>
+PSW scheduler(PSW cpu) {
+	/* À FAIRE : sauvegarder le thread courant si il existe */
+	do {
+	current_thread = (current_thread + 1) % MAX_THREADS;
+	} while (thread[current_thread].state != READY);
+	/* À FAIRE : relancer ce thread */
+}
+						</code>
+					</pre>
+					<h5>Travail à faire :</h5>
+					<ul>
+						<li>
+							Ajoutez l'appel à la fonction <code>scheduler</code> dans le traitement de l'interruption <code>TRACE</code>.
+						</li>
+						<li>
+							<p>
+								Complétez la fonction <code>scheduler()</code> qui code l'ordonnanceur. 
+							À ce stade, le simulateur doit fonctionner correctement. 
+							Étant donné qu'il n'y a qu'un seul thread, il est systématiquement sauvegardé puis choisi pour être exécuté.
+							</p>
+						</li>
+						<li>
+							<p>
+								Pour tester votre ordonnanceur, vous pouvez maintenant créer directement deux threads au démarrage du
+								système (prenez l'exemple de la boucle de la section précédente). Les sorties des deux threads devraient se
+								mélanger pour illustrer le multi-tâches simulé.
+							</p>
+						</li>
+					</ul>
+					<h4>Faites valider votre progression par votre intervenant TP</h4>
+				</div>
+		</div>
+		<div class="col-lg-8 pt-3 pb-5">
+			<h2 id="appelsysteme">4 - Les appels systèmes</h2>
+			<div class="py-2">
+				<h3>4.1 - La bonne version de EXIT</h3>
+				<ul>
+					<li>
+						<p>
+							Dans un premier temps, complétez la fonction <code>kill_thread</code> qui a la charge de supprimer un thread. 
+							Faites en sorte que le simulateur s'arrête si il n'y a plus de thread.
+						</p>
+					</li>
+					<li>
+						<p>
+							Dans un deuxième temps, utilisez la fonction précédente pour supprimer 
+							le thread courant dans <code>sysc_exit</code>.
+						</p>
+					</li>
+				</ul>
+			</div>
+			<div class="py-2">
+				<h3>4.2 - Création de thread</h3>
+				<ul>
+					<li>
+						<p>Complétez la fonction <code>new_thread</code> (voir les explications déjà présentes dans le code).</p>
+					</li>
+					<li>
+						<p>
+							Ajoutez ensuite un nouvel appel système sysc <code>SYSC_NEW_THREAD</code> qui duplique le thread courant pour en créer
+							un nouveau. Chez le père (l'appelant), le registre <code>AC</code> est affecté à 1, tandis que chez le fils il est forcé à zéro.
+							Le père et le fils continuent leur exécution à la première instruction qui suit l'appel au système.
+							Voir l'exemple d'utilisation çi-dessous.
+						</p>						
+						<h5>Exemple de création d'un thread</h5>
+						<pre class="lang-c">
+							<code>
+	define SYSC_EXIT 100
+	define SYSC_PUTI 200
+	define SYSC_NEW_THREAD 300
+
+	// *** créer un thread ***
+	sysc SYSC_NEW_THREAD // créer un thread
+	ifgt pere // si (AC > 0), aller à pere
+
+	// *** code du fils ***
+	set 1000 // AC = 1000
+	sysc SYSC_PUTI // afficher AC
+	nop
+	nop
+	
+	
+pere: // *** code du père ***
+	set 2000 // AC = 2000
+	sysc SYSC_PUTI // afficher AC
+	sysc SYSC_EXIT // fin du thread</code>
+						</pre>
+					</li>
+				</ul>
+				<h4>Faites valider votre progression par votre intervenant TP</h4>
+
+			</div>
+
+		</div>
+	</div>
+</body>
+
+</html>

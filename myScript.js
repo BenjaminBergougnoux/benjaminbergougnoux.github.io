@@ -151,9 +151,9 @@ var app = new Vue({
         authors: "with V. Chekan and G. Stamoulis",
         conf: "Accepted at SODA 2026",
         journal: "",
-        comment: "Soon on arXiv",
-        openacess: "",
-        pdf: "",
+        comment: "",
+        openacess: "http://arxiv.org/abs/2510.19793",
+        pdf: "http://arxiv.org/abs/pdf/2510.19793",
         bibtex: "",
         presentations: [
           // {

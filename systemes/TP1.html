@@ -279,9 +279,9 @@ $ ./simul</code>
 					</li>
 					<li>
 						<p>
-							Faites en sorte que les interruptions d'erreur (instruction inconnue <code>INT INST</code> et erreur d'adressage <code>INT SEGV</code> ) provoque l'arrêt du simulateur (donc un appel à <code>exit()</code> ). 
+							Faites en sorte que les interruptions d'erreur (instruction inconnue <code>INT_INST</code> et erreur d'adressage <code>INT_SEGV</code> ) provoque l'arrêt du simulateur (donc un appel à <code>exit()</code> ). 
 							Essayez (sans trop perdre de temps là-dessus) de modifiez le programme exécuté pour faire apparaı̂tre une des deux erreurs (revenez ensuite à la version d'origine).
-							 <i>Indication :</i> pour provoquer une <code>INT INST</code> sans que l'assembleur la détecte, il faut jouer avec <code>DATA</code>
+							 <i>Indication :</i> pour provoquer une <code>INT_INST</code> sans que l'assembleur la détecte, il faut jouer avec <code>DATA</code>
 						</p>
 					</li>
 				</ol>
@@ -333,7 +333,7 @@ sysc SYSC_EXIT
 					</li>
 					<li>
 						<p>
-							Compléter la fonction <code>sysc exit</code>.
+							Compléter la fonction <code>sysc_exit</code>.
 						</p>
 					</li>
 				</ul>

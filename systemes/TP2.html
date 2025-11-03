@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TP2-Systèmes</title>
+	<meta name="description" content="TP2 de l'UE Système d'exploitation">
+	<meta name="author" content="Benjamin Bergougnoux">
+
+	<link rel="icon" type="image/png" href="logo.png" />
+	<link href="./../themes/prism.css" rel="stylesheet" />
+	<link href="./../themes/a11y-dark-legacy.css" rel="stylesheet" />
+	<link href="./../themes/mystyle.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+	<script src="../prism.js"></script>
+	<script>
+		MathJax = {
+			tex: {
+				inlineMath: [['$', '$'], ['\\(', '\\)']]
+			},
+			svg: {
+				fontCache: 'global'
+			}
+		};
+	</script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+
+<body id="home" data-spy="scroll" data-target="#myNavBar" data-offset="1" data-prismjs-copy="Copier"
+	data-prismjs-copy-error="Copie : erreur" data-prismjs-copy-success="Copie : succès!">
+
+
+	<div class="container bd-layout">
+
+		<div class="row">
+
+			<div class="col-lg-3">
+				<div class="sticky-top pt-5">
+					<div class="card htex-toc">
+						<div class="card-header p-1 lp-2 htex-bg-blue">Sommaire</div>
+						<ul class="list-group list-group-flush no-htex">
+							<li class="list-group-item pt-1 pb-0 ps-1"><a href="#consignes">Consignes pour
+									l'évaluation</i></a>
+							</li>
+							<li class="list-group-item pt-1 pb-0 ps-1"><a href="#idel">1 - Ajouter un thread
+									idle</i></a>
+							</li>
+							<li class="list-group-item pt-1 pb-0 ps-1"><a href="#endormir">2 - Endormir des
+									threads</i></a>
+							</li>
+							<li class="list-group-item pt-1 pb-0 ps-1"><a href="#getchar">3 - La fonction
+									getchar</i></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-lg-8 py-3">
+				<h1 id="htex-h1-1" class="htex" style="text-align: left;">TP n°2 : Sleep et Entrées / sorties</h1>
+
+				<div class="pt-3">
+					<h2 id="#consignes">Consignes pour l'évaluation</h2>
+					<div class="text-bg-warning p-3 mb-2">
+						<p>
+							TP évalué à effectuer seul⋅e ou en binôme. Suite du <a href="./TP1.html">TP1</a> !
+							<b>Pensez à faire valider votre progression (celle du TP1 et TP2) en appelant votre
+								intervenant
+								TP</b>, les étapes
+							qu'il faut valider sont indiquées.
+							N'hésitez pas à demander de l'aide à votre intervenant si vous bloquez !
+						</p>
+					</div>
+					<div class="text-bg-info p-3 mb-2">
+						<h4>Il faut quand même rendre votre TP sur Ametice.</h4>
+						<p>Déposez une archive .zip contenant :</p>
+						<ul>
+							<li>Votre fichier <code>systeme.c</code>,</li>
+							<li>Les programmes <code>.asm</code> que vous avez créés pour tester votre
+								code (si vous en avez), et</li>
+							<li>Un fichier texte <code>README.md</code> indiquant les noms et prénoms des
+								membres du groupe et décrivant votre progression : les parties que vous avez
+								réussi à implémenter et celles où ça bug (exemple : « On a réussi tout
+								jusqu'à la partie 2 du TP 2, on a essayé de faire la partie sur get_char, mais il y a un bug... »). </li>
+						</ul>
+						<p>Faites en sorte que votre code compile et que l'exécution teste tout ce que vous avez implémenté.</p>
+						<p><b>Date butoir pour la remise des travaux : mercredi 12 novembre 18h33.
+							</b> Aucune remise de travaux possible après cette date !</p>
+						<p><b>L'évaluation se fait avant tout pendant les séances de TP :</b> les fichiers déposés seront utilisés pour valider au
+							maximum 2 parties en plus de celles validées pendant les séances de TP, sauf si vous avez
+							un bonne excuse (exemple : mon chien a mangé mon ordinateur), auquel cas, indiquez cette excuse dans <code>README.md</code>.</p>
+					</div>
+				</div>
+
+				<div class="pt-3">
+					<h2 id="idle" class="htex">1 - Ajouter un thread idle</h2>
+					<p>Nous avons un ordonnanceur et nous avons déjà exécuté deux threads en simultané.
+						Nous allons en ajouter un troisième (qui boucle sans rien faire) afin de s'assurer que
+						nous aurons toujours <b>au moins un thread prêt</b> à choisir et à exécuter.</p>
+					<ul>
+						<li>
+							<p>Prévoir une variable globale :</p>
+							<div class="pb-2 not-card htex-code htex-copy prettyprint lang-c">
+								<pre class="language-c"><code class="language-c">PSW idle;</code></pre>
+							</div>
+						</li>
+						<li>
+							<p>
+								Prévoir (lors de l'initialisation du système) la création d'un code simple qui effectue
+								une
+								boucle infinie :
+							</p>
+							<div class="pb-2 not-card htex-code htex-copy prettyprint lang-c">
+								<h5>Un code qui boucle dans system init :</h5>
+								<pre class="language-c"><code class="language-c">...
+idle.PC = 120;
+assemble_string(idle.PC, "loop: jump loop");
+...</code></pre>
+							</div>
+							<p>Il n'est pas nécessaire d'ajouter le thread idle au tableau des threads.</p>
+						</li>
+						<li>
+							<p>
+								Modifier l'ordonnanceur afin qu'il renvoie <code class="lang-c">idle</code> si aucun
+								autre thread n'est prêt (ce qui va
+								arriver dans les
+								questions qui suivent).
+							</p>
+						</li>
+					</ul>
+					<h4>Faites valider votre progression par votre intervenant TP</h4>
+				</div>
+
+				<div class="pt-3">
+					<h2 id="endormir">2 - Endormir des threads</h3>
+						<p>
+							On se propose de réaliser l'appel système <code class="lang-c">SYSC_SLEEP</code> qui va
+							endormir le thread courant
+							pendant
+							AC seconde(s).
+						</p>
+						<ul>
+							<li>
+								<p>
+									Ajoutez un état endormi.
+								</p>
+							</li>
+							<li>
+								<p>
+									Ajoutez une date de réveil (voir <code class="lang-c">man 2 time</code> ) dans la
+									structure <code class="lang-c">PCB</code>.
+								</p>
+							</li>
+							<li>
+								<p>
+									Compléter la fonction <code class="lang-c">PSW sysc_sleep(PSW cpu)</code> qui doit
+									endormir le thread courant.
+								</p>
+							</li>
+							<li>
+								<p>
+									Faites en sorte de réveiller les endormis, vous avez deux options :
+								<ul>
+									<li>
+										<p>
+											Complétez la fonction <code class="lang-c">void wakeup(void)</code> qui
+											réveille tous les threads endormis et appeler cette fonction dans <code
+												class="lang-c">PSW scheduler(PSW cpu)</code> avant de chercher un thread
+											qui est prêt à être éxcuter.
+										</p>
+									</li>
+									<li>
+										<p>
+											Plus efficace : modifier la boucle de la fonction <code
+												class="lang-c">PSW scheduler(PSW cpu)</code> afin de choisir le premier
+											thread après <code class="lang-c">thread[current_thread]</code> qui est
+											<code class="lang-c">READY</code> ou prêt à être réveillé.
+										</p>
+									</li>
+								</ul>
+								</p>
+							</li>
+							<li>
+								<p>
+									Testez votre code : faites en sorte que le thread courant utilise <code
+										class="lang-c">SYSC_SLEEP</code> (voir
+									exemple ci-dessous).
+								</p>
+								<div class="pb-2 not-card htex-code htex-copy prettyprint lang-c">
+									<h5>Exemple d'endormissement d'un thread :</h5>
+									<pre class="language-c"><code class="language-c">define SYSC_EXIT 100
+define SYSC_PUTI 200
+define SYSC_NEW_THREAD 300
+define SYSC_SLEEP 400
+set 4 // AC = 4
+sysc SYSC_SLEEP // endormir AC sec.
+sysc SYSC_PUTI // afficher AC
+sysc SYSC_SLEEP // endormir AC sec.
+sysc SYSC_PUTI // afficher AC
+sysc SYSC_EXIT // fin du thread</code></pre>
+							</li>
+						</ul>
+						<h4>Faites valider votre progression par votre intervenant TP</h4>
+				</div>
+
+				<div class="pt-3">
+					<h2 id="getchar">3 - La fonction getchar</h2>
+					<p>
+						On se propose de réaliser l'appel système <code class="lang-c">SYSC_SYSC GETCHAR</code> qui va
+						lire
+						un
+						caractère sur l'entrée
+						standard et le placer dans <code class="lang-c">AC</code> ou attendre l'arrivée d'un caractère.
+					</p>
+					<p>
+						Nous ne pouvons pas réellement utiliser le clavier car cela impose de contrôler parfaitement les
+						arrivées de
+						caractères. La couche matérielle ( <code>cpu.c</code> ) simule l'arrivée d'un caractère toutes
+						les
+						trois
+						secondes et
+						signale cet
+						événement par une interruption clavier. Le caractère en question se trouve dans le registre
+						<code class="lang-c">IO</code> (voir
+						<code>cpu.h</code> ).
+					</p>
+					<ul>
+						<li>
+							<p>
+								Prévoir la définition du tampon (capacité un caractère) :
+							</p>
+							<div class="pb-2 not-card htex-code htex-copy prettyprint">
+								<pre
+									class="language-c"><code class="language-c">char tampon = '\0'; /* le '\0' indique le vide */</code></pre>
+							</div>
+						</li>
+						<li>
+							<p>
+								Ajouter un nouvel état <code class="lang-c">GETCHAR</code> (endormi en attente de
+								caractère).
+							</p>
+						</li>
+						<li>
+							<p>
+								Endormir le thread courant sur une demande de caractère si le tampon est vide. Si le
+								tampon n'est pas vide, renvoyer le caractère.
+							</p>
+						</li>
+						<li>
+							<p>
+								Compléter la fonction système <code class="lang-c">keyboard_event(WORD theChar)</code>
+								appelée par le système pour gérer les interruptions clavier
+								<code class="lang-c">INT_KEYBOARD</code> (lire les commentaires).
+							</p>
+						</li>
+						<li>
+							<p>
+								Vous pouvez tester cette fonction en créant un thread qui tente de lire un caractère
+								toutes les secondes ou toutes les quatres secondes :
+							</p>
+							<div class="pb-2 not-card htex-code htex-copy prettyprint">
+								<h5>Lecture d'un caractère et endormissement</h5>
+								<pre class="language-c"><code class="language-c">define SYSC_EXIT 100
+define SYSC_PUTI 200
+define SYSC_NEW_THREAD 300
+define SYSC_SLEEP 400
+define SYSC_GETCHAR 500
+loop:	
+	sysc SYSC_GETCHAR // AC = getchar()
+	sysc SYSC_PUTI // puti(AC)
+	set 1 // AC = 1
+	sysc SYSC_SLEEP // sleep(AC)
+	jump loop</code></pre>
+							</div>
+						</li>
+					</ul>
+					<h4>Faites valider votre progression par votre intervenant TP</h4>
+				</div>
+			</div>
+		</div>
+
+		<div class="rpw d-flex" style="height: 400px;">
+		</div>
+
+	</div>
+</body>
+
+</html>

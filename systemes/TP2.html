@@ -182,7 +182,7 @@ assemble_string(idle.PC, "loop: jump loop");
 											Plus efficace : modifier la boucle de la fonction <code
 												class="lang-c">PSW scheduler(PSW cpu)</code> afin de choisir le premier
 											thread après <code class="lang-c">thread[current_thread]</code> qui est
-											<code class="lang-c">READY</code> ou prêt à être réveillé.
+											<code class="lang-c">READY</code> ou prêt à être réveillé (dans ce dernier cas, il faut pas oublier de changer son état).
 										</p>
 									</li>
 								</ul>

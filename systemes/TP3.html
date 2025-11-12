@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Systèmes TP3</title>
+	<title>TP3-Systèmes</title>
 	<meta name="description" content="TP3 de l'UE Système d'exploitation">
 	<meta name="author" content="Benjamin Bergougnoux">
 
@@ -13,16 +13,12 @@
 	<link href="./../themes/prism.css" rel="stylesheet" />
 	<link href="./../themes/a11y-dark-legacy.css" rel="stylesheet" />
 	<link href="./../themes/mystyle.css" rel="stylesheet">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
 		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 	<script src="../prism.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 		MathJax = {
 			tex: {
@@ -33,9 +29,9 @@
 			}
 		};
 	</script>
-	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
+
 
 
 <body id="home" data-spy="scroll" data-target="#myNavBar" data-offset="1" data-prismjs-copy="Copier"
@@ -73,20 +69,29 @@
 			</div>
 
 			<div class="col-lg-8 py-3">
-				
+
 				<h1 id="htex-h1-1">TP n°3 : Threads et sémaphores</h1>
 
-				<h2 class="htex"> </h2>
-				<h2 id="thread" class="htex">Utilisation des <i>threads</i> Linux</h2>
-				<p>Les threads de LINUX sont une implantation normalisée des P-threads
-					(threads Posix). Ces threads sont gérés à la fois par le système et par
-					une librairie au niveau utilisateur. Pour créer des threads, LINUX
-					applique la stratégie du <i>One-For-One</i> (une entrée dans la table
-					des processus pour chaque thread).</p>
-				<h3 id="htex-h3-1" class="htex">Les fonctions disponibles</h3>
-				<div class="not-card htex-code htex-copy prettyprint lang-c">Un extrait
-					des déclarations de <code>&lt;pthread.h&gt;</code>
-					<pre class="language-c"><code>	// Création d'un thread qui exécute la fonction spécifiée.
+				<div class="text-bg-warning p-3">
+					On vous déconseille de réaliser ce TP sous Windows car on utilise les threads POSIX qui n'est pas un
+					standard géré nativement par Windows.
+					Utiliser une machine virtuelle si vous n'avez pas d'ordi avec un système d'exploitation Unix.
+					Remarque : il semble possible de réaliser ce TP sur Windows quand même en utilisant des outils comme
+					<a href="https://www.cygwin.com/">Cygwin</a>
+				</div>
+
+				<div class="pt-3">
+					<h2 class="htex"> </h2>
+					<h2 id="thread" class="htex">Utilisation des <i>threads</i> Linux</h2>
+					<p>Les threads de LINUX sont une implantation normalisée des P-threads
+						(threads Posix). Ces threads sont gérés à la fois par le système et par
+						une librairie au niveau utilisateur. Pour créer des threads, LINUX
+						applique la stratégie du <i>One-For-One</i> (une entrée dans la table
+						des processus pour chaque thread).</p>
+					<h3 id="htex-h3-1" class="htex">Les fonctions disponibles</h3>
+					<div class="not-card htex-code htex-copy prettyprint lang-c">Un extrait
+						des déclarations de <code>&lt;pthread.h&gt;</code>
+						<pre class="language-c"><code>	// Création d'un thread qui exécute la fonction spécifiée.
 	// avec l'argument prévu.
 	int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
 		void *(*start_function) (void *), void *arg);
@@ -102,20 +107,20 @@
 
 	// Abandonner la CPU pour la donner à un autre thread.
 	int sched_yield(void);</code></pre>
-				</div>
-				<p>Bien entendu, une aide plus complète peut être obtenue sur chaque
-					fonction en utilisant le manuel UNIX : <br>
-					<code class="language-shell">man nom_de_fonction</code>.
-				</p>
-				<h3 id="htex-h3-2" class="htex">Un exemple</h3>
-				<p>Cet exemple est la traduction d'un exercice de TP avec un thread qui
-					lit des caractères au clavier et les passe à un autre thread qui se
-					charge de les afficher. Il faut noter que le thread principal (le père)
-					se charge de la création de ses fils et de l'attente de leur mort. Cette
-					disparition est programmée à l'arrivée du caractère
-					<code class="language-shell">EOF</code>.
-				</p>
-				<pre class="language-c"><code>	#include &lt;stdio.h&gt; 
+					</div>
+					<p>Bien entendu, une aide plus complète peut être obtenue sur chaque
+						fonction en utilisant le manuel UNIX : <br>
+						<code class="language-shell">man nom_de_fonction</code>.
+					</p>
+					<h3 id="htex-h3-2" class="htex">Un exemple</h3>
+					<p>Cet exemple est la traduction d'un exercice de TP avec un thread qui
+						lit des caractères au clavier et les passe à un autre thread qui se
+						charge de les afficher. Il faut noter que le thread principal (le père)
+						se charge de la création de ses fils et de l'attente de leur mort. Cette
+						disparition est programmée à l'arrivée du caractère
+						<code class="language-shell">EOF</code>.
+					</p>
+					<pre class="language-c"><code>	#include &lt;stdio.h&gt; 
 	#include &lt;stdlib.h&gt; 
 	#include &lt;pthread.h&gt; 
 	#include &lt;stdbool.h&gt;
@@ -191,39 +196,44 @@
 		free(nb_chars);
 		return (EXIT_SUCCESS);
 	}</code></pre>
-				<p></p>
-				<ul class="htex">
-					<li class="htex">Compiler et effectuer l'édition de liens avec la ligne
-						suivante :
-						<div class="not-card htex-code htex-copy prettyprint lang-sh">
-							<code class="language-shell">
+					<p></p>
+					<ul class="htex">
+						<li class="htex">Compiler et effectuer l'édition de liens avec la ligne
+							suivante :
+							<div class="not-card htex-code htex-copy prettyprint lang-sh">
+								<code class="language-shell">
 				    gcc votre_programme.c -pthread -o votre_programme</code>
-						</div>
-					</li>
-					<li class="htex">Dans un autre console, vous pouvez utiliser la commande
-						<code class="language-shell"> ps -eLf</code> pour observer les
-						<i>threads</i> créés par cet exemple.
-					</li>
-					<li class="htex">Vérifiez la consommation de CPU en utilisant la
-						commande <code class="language-shell">time votre_programme</code>.</li>
-					<li class="htex">Diminuez cette consommation de CPU en utilisant la
-						fonction <code class="language-shell">usleep(100)</code> dans
-						les boucles d'attente et vérifiez le résultat (avec la commande
-						<code class="language-shell">time</code>).
-					</li>
-				</ul>
-				<h2 id="sysc" class="htex">Utilisation des sémaphores</h2>
-				<p><span style="color: rgb(0, 0, 0);">La librairie de gestion des
-						<i>threads</i> offre les fonctions ci-dessous pour créer et utiliser
-						des sémaphores. </span></p>
-				<p><span style="color: rgb(91, 71, 179);"><strong>Attention</strong> : ces
-						sémaphores sont propres à un processus. Ils permettent de synchroniser
-						plusieurs threads entre eux, mais ils ne peuvent synchroniser
-						plusieurs processus. Pour réaliser cette synchronisation il faut se
-						tourner vers les sémaphores système V basés sur les IPC (<i>Inter
-							Processus Communication</i>).</span></p>
-				<h3 id="htex-h3-3" class="htex">Définition des fonctions</h3>
-				<pre class="language-c"><code>	// Création d'un sémaphore et préparation d'une valeur initiale
+							</div>
+						</li>
+						<li class="htex">Dans un autre console, vous pouvez utiliser la commande
+							<code class="language-shell"> ps -eLf</code> pour observer les
+							<i>threads</i> créés par cet exemple.
+						</li>
+						<li class="htex">Vérifiez la consommation de CPU en utilisant la
+							commande <code class="language-shell">time votre_programme</code>.</li>
+						<li class="htex">Diminuez cette consommation de CPU en utilisant la
+							fonction <code class="language-shell">usleep(100)</code> dans
+							les boucles d'attente et vérifiez le résultat (avec la commande
+							<code class="language-shell">time</code>).
+						</li>
+					</ul>
+
+				</div>
+
+
+				<div class="py-3">
+					<h2 id="sysc" class="htex">Utilisation des sémaphores</h2>
+					<p><span style="color: rgb(0, 0, 0);">La librairie de gestion des
+							<i>threads</i> offre les fonctions ci-dessous pour créer et utiliser
+							des sémaphores. </span></p>
+					<p><span style="color: rgb(91, 71, 179);"><strong>Attention</strong> : ces
+							sémaphores sont propres à un processus. Ils permettent de synchroniser
+							plusieurs threads entre eux, mais ils ne peuvent synchroniser
+							plusieurs processus. Pour réaliser cette synchronisation il faut se
+							tourner vers les sémaphores système V basés sur les IPC (<i>Inter
+								Processus Communication</i>).</span></p>
+					<h3 id="htex-h3-3" class="htex">Définition des fonctions</h3>
+					<pre class="language-c"><code>	// Création d'un sémaphore et préparation d'une valeur initiale
 	int sem_init(sem_t *semaphore, int pshared, unsigned int valeur)
 
 	// Opération P sur un sémaphore.
@@ -240,16 +250,16 @@
 
 	// Destruction d'un sémaphore.
 	int sem_destroy(sem_t * semaphore);</code></pre>
-				<p>Bien entendu, une aide plus complète peut être obtenue sur chaque
-					fonction en utilisant le manuel UNIX : <br>
-					<code class="language-shell">man nom_de_la_fonction</code>.
-				</p>
-				<h3 id="htex-h3-4" class="htex">Un exemple d'utilisation des sémaphores
-				</h3>
-				<p>Cet exemple illustre la mise en œuvre d'une section critique (mutuelle
-					exclusion) permettant d'éviter un mélange des affichages réalisés par
-					les deux threads.</p>
-<pre class="language-c"><code>	#include &lt;stdio.h&gt;
+					<p>Bien entendu, une aide plus complète peut être obtenue sur chaque
+						fonction en utilisant le manuel UNIX : <br>
+						<code class="language-shell">man nom_de_la_fonction</code>.
+					</p>
+					<h3 id="htex-h3-4" class="htex">Un exemple d'utilisation des sémaphores
+					</h3>
+					<p>Cet exemple illustre la mise en œuvre d'une section critique (mutuelle
+						exclusion) permettant d'éviter un mélange des affichages réalisés par
+						les deux threads.</p>
+					<pre class="language-c"><code>	#include &lt;stdio.h&gt;
 	#include &lt;stdlib.h&gt;
 	#include &lt;pthread.h&gt;
 	#include &lt;semaphore.h&gt;
@@ -299,86 +309,89 @@
 
 		return (EXIT_SUCCESS);
 	}</code></pre>
-				<h4 class="htex htex-code htex-copy prettyprint lang-c prettyprinted"> 
-				</h4>
-				<ul class="htex">
-					<li class="htex">Compiler et effectuer l'édition de liens avec la ligne
-						suivante :<br><code
-							class="language-shell">gcc votre_programme.c -pthread -o votre_programme</code>
-					</li>
-					<li class="htex">Vérifier que le mécanisme d'exclusion mutuelle est bien
-						nécessaire (commentez l'appel des fonctions
-						<code class="language-shell">sem_wait</code> et
-						<code class="language-shell">sem_post</code>).
-					</li>
-					<li class="htex">Si vous supprimez l'appel à
-						<code class="language-shell">sleep</code> dans la section critique quel est le
-						résultat ? Avez-vous une explication ?
-					</li>
-				</ul>
-				<h2 class="htex"> </h2>
-				<h2 id="prod-conso" class="htex">Sémaphore, producteur et consommateur
-				</h2>
-				<p></p>
-				<h3 id="htex-h3-5" class="htex">Un tampon d'un caractère</h3>
-				<ul>
-					<li>Reprenez le premier exemple des threads (échange de caractère) et
-						remplacez la boucle d'attente active (sur la valeur <code class="lang-c">'\0'</code>) par
-						deux sémaphores pour implanter un schéma producteur consommateur (le
-						tampon est constitué d'un seul caractère). Rappel du schéma
-						producteur/consommateur :</li>
-				</ul>
-				<pre class="language-clike"><code>NPlein : sémaphore := (0, {});
+					<h4 class="htex htex-code htex-copy prettyprint lang-c prettyprinted"> 
+					</h4>
+					<ul class="htex">
+						<li class="htex">Compiler et effectuer l'édition de liens avec la ligne
+							suivante :<br><code
+								class="language-shell">gcc votre_programme.c -pthread -o votre_programme</code>
+						</li>
+						<li class="htex">Vérifier que le mécanisme d'exclusion mutuelle est bien
+							nécessaire (commentez l'appel des fonctions
+							<code class="language-shell">sem_wait</code> et
+							<code class="language-shell">sem_post</code>).
+						</li>
+						<li class="htex">Si vous supprimez l'appel à
+							<code class="language-shell">sleep</code> dans la section critique quel est le
+							résultat ? Avez-vous une explication ?
+						</li>
+					</ul>
+				</div>
+
+				<div class="py-3">
+					<h2 id="prod-conso" class="htex">Sémaphore, producteur et consommateur
+					</h2>
+					<p></p>
+					<h3 id="htex-h3-5" class="htex">Un tampon d'un caractère</h3>
+					<ul>
+						<li>Reprenez le premier exemple des threads (échange de caractère) et
+							remplacez la boucle d'attente active (sur la valeur <code class="lang-c">'\0'</code>) par
+							deux sémaphores pour implanter un schéma producteur consommateur (le
+							tampon est constitué d'un seul caractère). Rappel du schéma
+							producteur/consommateur :</li>
+					</ul>
+					<pre class="language-clike"><code>NPlein : sémaphore := (0, {});
 NVide  : sémaphore := (n, {});  // Taille du tampon</code></pre>
-				<div class="container-fluid pt-2 pb-3">
-					<div class="row">
-						<div class="col">
-							<p>Algorithme du producteur :</p>
-							<div class="not-card htex-code">
-								<pre class="language-clike"><code>Pour toujours faire
+					<div class="container-fluid pt-2 pb-3">
+						<div class="row">
+							<div class="col">
+								<p>Algorithme du producteur :</p>
+								<div class="not-card htex-code">
+									<pre class="language-clike"><code>Pour toujours faire
 	P(NVide);
 	&lt; produire &gt;
 	&lt; déposer dans le tampon &gt;
 	V(NPlein);
 Fin-pour</code></pre>
-								<pre id="htex-pre-8" class="htex htex-code" xml:space="preserve"></pre>
+									<pre id="htex-pre-8" class="htex htex-code" xml:space="preserve"></pre>
+								</div>
 							</div>
-						</div>
-						<div class="col">
-							<p>Algorithme du Consommateur :</p>
-							<div class="not-card htex-code">
-								<pre class="language-clike"><code>Pour toujours faire
+							<div class="col">
+								<p>Algorithme du Consommateur :</p>
+								<div class="not-card htex-code">
+									<pre class="language-clike"><code>Pour toujours faire
 	P(NPlein);
 	&lt; retirer du tampon &gt;
 	&lt; consommer &gt;
 	V(NVide);
 Fin-pour</code></pre>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<h3 id="htex-h3-6" class="htex">Un tampon réaliste</h3>
-				<ul>
-					<li>Modifiez l'exemple précédent pour avoir maintenant un tampon d'une
-						dizaine de caractères.</li>
-				</ul>
-				<pre class="language-c"><code>	#define BUFFER_SIZE (10)
+					<h3 id="htex-h3-6" class="htex">Un tampon réaliste</h3>
+					<ul>
+						<li>Modifiez l'exemple précédent pour avoir maintenant un tampon d'une
+							dizaine de caractères.</li>
+					</ul>
+					<pre class="language-c"><code>	#define BUFFER_SIZE (10)
 	char buffer[ BUFFER_SIZE ];
 	int ptr_input = 0;
 	int ptr_output = 0;</code></pre>
-				<p>La variable <code class="language-shell">ptr_input</code> donne
-					l'indice de la prochaine case vide du tampon tandis que
-					<code class="language-shell">ptr_output</code> donne l'indice de la
-					prochaine case pleine. Ces variables sont gérées comme des pointeurs
-					circulaires.
-				</p>
-				<ul>
-					<li>Prenez soin de ralentir le producteur (avec
-						<code class="language-shell">sleep</code>) puis dans un deuxième temps
-						le consommateur pour tester tous les cas de figure (tampon vide ou
-						tampon plein).
-					</li>
-				</ul>
+					<p>La variable <code class="language-shell">ptr_input</code> donne
+						l'indice de la prochaine case vide du tampon tandis que
+						<code class="language-shell">ptr_output</code> donne l'indice de la
+						prochaine case pleine. Ces variables sont gérées comme des pointeurs
+						circulaires.
+					</p>
+					<ul>
+						<li>Prenez soin de ralentir le producteur (avec
+							<code class="language-shell">sleep</code>) puis dans un deuxième temps
+							le consommateur pour tester tous les cas de figure (tampon vide ou
+							tampon plein).
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 		<div class="rpw d-flex" style="height: 400px;">

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TP5-Systèmes</title>
+	<meta name="description" content="TP5 de l'UE Système d'exploitation">
+	<meta name="author" content="Benjamin Bergougnoux">
+
+	<link rel="icon" type="image/png" href="logo.png" />
+	<link href="./../themes/prism.css" rel="stylesheet" />
+	<link href="./../themes/a11y-dark-legacy.css" rel="stylesheet" />
+	<link href="./../themes/mystyle.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+	<script src="../prism.js"></script>
+	<script>
+		MathJax = {
+			tex: {
+				inlineMath: [['$', '$'], ['\\(', '\\)']]
+			},
+			svg: {
+				fontCache: 'global'
+			}
+		};
+	</script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+
+<body id="home" data-spy="scroll" data-target="#myNavBar" data-offset="1" data-prismjs-copy="Copier"
+	data-prismjs-copy-error="Copie : erreur" data-prismjs-copy-success="Copie : succès!">
+	<div class="container pt-5 pb-3">
+
+		<div class="row py-3">
+			<div class="col-lg-3">
+				<div class="sticky-top pt-5">
+					<div class="card htex-toc">
+						<div class="card-header p-1 lp-2 htex-bg-blue">Sommaire</div>
+						<ul class="list-group list-group-flush no-htex">
+							<li class="list-group-item pt-1 pb-0 ps-1"><a href="#simulateur">Présentation du
+									simulateur</a></li>
+							<li class="list-group-item pt-1 pb-0 ps-3"><a href="#fichiers">Présentation des fichiers</a>
+							</li>
+							<li class="list-group-item pt-1 pb-0 ps-3"><a href="#memory">Encapsulation de la mémoire
+									centrale</a></li>
+							<li class="list-group-item pt-1 pb-0 ps-3"><a href="#demarrage">Démarrer le simulateur</a>
+							</li>
+							<li class="list-group-item pt-1 pb-0 ps-3"><a href="#consigne1">Première consigne</a>
+							</li>
+
+							<li class="list-group-item pt-1 pb-0 ps-1"><a href="#pagination">Pagination</a></li>
+							<li class="list-group-item pt-1 pb-0 ps-3"><a href="#mmu">Présentation du code</a></li>
+							<li class="list-group-item pt-1 pb-0 ps-3"><a href="#objectif">Description de l'objectif</a></li>
+							<li class="list-group-item pt-1 pb-0 ps-3"><a href="#implementation">Fonctions à
+									implémenter</a></li>
+							<li class="list-group-item pt-1 pb-0 ps-3"><a href="#final">Test Final</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-8">
+				<h1 id="htex-h1-1" class="htex" style="text-align: left;">TP n°5 : Simulation d'une mémoire paginée
+				</h1>
+
+				<div class="text-bg-warning p-4">
+					On vous déconseille de réaliser ce TP sous Windows car on utilise les threads POSIX qui n'est pas un
+					standard géré nativement par Windows.
+					Utiliser une machine virtuelle si vous n'avez pas d'ordi avec un système d'exploitation Unix.
+					Remarque : il semble possible de réaliser ce TP sur Windows quand même en utilisant des outils comme
+					<a href="https://www.cygwin.com/">Cygwin</a>
+				</div>
+
+
+				<div class="py-3">
+					<h2 id="simulateur">Présentation du simulateur</h2>
+					<p>On reprends une version modifiée du simulateur du TP1 et TP2.</p>
+					<ol>
+						<li>
+							Téléchargez l'archive <code>simul-mmu.zip</code> <a href="./simul-mmu.zip">ici</a>.
+						</li>
+						<li>
+							Décompressez l'archive :
+							<pre class="language-c"><code>$ unzip simul-mmu.zip</code></pre>
+						</li>
+					</ol>
+					<div class="py-2">
+						<h3 id="fichiers">Présentation des fichiers.</h3>
+						<p>On a un découpage du code en fichiers un peu différent par rapport au TP1 et TP2, Voiçi le
+							rôle de chaque fichier :</p>
+						<ul>
+							<li>
+								<code>basic.c</code> et <code>basic.h</code> : définitions des instructions, des
+								interruptions, d'un mot mémoire, du mot d'état du processeur.
+								Il y a aussi certaines fonctions basiques pour manipuler et afficher ces
+								notions.
+							</li>
+							<li>
+								<code>cpu.c</code> et <code>cpu.h</code> : simulation d'un CPU, la fonction
+								<code>PSW simulate_cpu(PSW)</code> permet de simuler l'exécution d'une
+								instruction.
+							</li>
+							<li>
+								<code>systeme.c</code> et <code>systeme.h</code> : définition du système avec
+								des fonctions pour l'initialiser,
+								traiter les interruptions. Il y a un ordonnanceur qui est appeler à la fin de
+								chaque quantum (ordonnancement du tourniquet).
+							</li>
+							<li>
+								<code>asm.c</code> : un mini-assembleur.
+							</li>
+							<li>
+								<code>simul.c</code> : fonction principale (fait office de main.c).
+							</li>
+							<li>
+								<code>prog1.asm</code> et <code>malveillant.asm</code> : deux exemples de
+								programmes assembleur. Le programme <code>prog1.asm</code> décremente un compteur et
+								fait un avec un appel système <code class="lang-c">sysc SYSC_EXIT</code> quand il
+								atteind 0.
+								De son coté, <code>malveillant.asm</code> écrit des <code class="lang-c">-8</code> en
+								mémoire, jusqu'où sa malveillance ira-t-elle ???
+							</li>
+							<li>
+								<code>memory.c</code> et <code>memory.h</code> : définition de la mémoire
+								centrale.
+							</li>
+							<li>
+								<code>mmu.c</code> et <code>mmu.h</code> : simulation d'un <i>memory management
+									unit</i>. <b>Fichier contenant toutes les fonctions à implémenter.</b>
+								Permet de lire et d'écrire dans la mémoire à partir des addresses logiques d'un
+								processus.
+							</li>
+						</ul>
+					</div>
+
+					<div class="py-2">
+						<h3 id="memory">Encapsulation de la mémoire centrale.</h3>
+						<p>
+							La mémoire centrale est protégée et ne peut pas être accèder n'importe comment.
+							Dans <code>mmu.c</code> la mémoire centrale ne peut être modifiée qu'avec les fonctions
+							suivantes de <code>memory.c</code> :
+						</p>
+						<pre class="language-c"><code>void write_mem(int physical_address, WORD value);
+WORD read_mem(int physical_address);</code></pre>
+						<p>
+							Dans les autres fichiers (comme <code>cpu.c</code> et <code>system.c</code>), on peut écrire
+							et lire dans la mémoire centrale uniquement avec les fonctions suivantes de
+							<code>mmu.c</code> :
+						</p>
+						<pre class="lang-c"><code>void write_logical_mem(int logical_address, PSW *cpu, WORD value);
+WORD read_logical_mem(int logical_address, PSW *cpu);</code></pre>
+						<p>
+							Au début, <code>mmu.c</code> n'implémente aucune abstraction de la mémoire : les
+							addresses
+							logiques sont directement traduite en addresses physique telles quelles. Le but principal de
+							ce TP est de modifier la fonction suivante de <code>mmu.c</code> qui permet de transformer
+							une
+							addresse logique d'un processus en une addresse physique :
+						</p>
+						<pre class="lang-c"><code>WORD logical_to_physical(int logical_address, PSW *cpu);</code></pre>
+					</div>
+
+
+					<div class="py-2">
+						<h3 id="demarrage">Démarrer le simulateur</h3>
+						<ol>
+							<li>
+								Compilez le projet :
+								<pre class="language-c"><code>$ cd simul-mmu
+$ make</code></pre>
+							</li>
+							<li>
+								Exécutez le simulateur :
+								<pre class="language-c"><code>$ ./simul</code></pre>
+							</li>
+							<li>
+								Pour recompilez le simulateur, il suffit de faire :
+								<pre class="language-c"><code>$ make clean
+$ make
+$ ./simul</code></pre>
+							</li>
+						</ol>
+					</div>
+
+					<div class="py-2">
+						<h3 id="consigne1">Première éxécution</h3>
+						<p>
+							Avant de commencer à implémenter les fonctions de <code>mmu.c</code>, exécuter le simulateur
+							et comprenez ce qu'il se passe. Pourquoi le processus 0 se termine sur une erreur
+							instruction inconnue ?
+						</p>
+					</div>
+				</div>
+
+				<div class="py-3">
+					<h2 id="pagination">Pagination</h2>
+
+					<div class="py-2">
+						<h3 id="mmu">Présentation du code déjà présent</h3>
+						<p>
+							Le fichier <code>mmu.c</code> a déjà quelques constantes et fonctions utiles pour
+							implémenter une mémoire paginée.
+						</p>
+						<pre class="lang-c"><code>#define PAGE_SIZE (8)                  // Taille d'une page en nombre de mots mémoire (WORD)
+#define NB_PAGES (MAX_MEM / PAGE_SIZE) // Nombre de pages physiques</code></pre>
+						<p>
+							Ces constantes définissent la taille d'une page en nombre de mots mémoire (ici une page fait
+							8 mots mémoire (de 32 bits)), le nombre de page physique est calculé en divisant la taille
+							de la mémoire par la taille d'une page. Le code suivant définit le tableau permettant de
+							gérer l'allocation des pages physiques.
+						</p>
+						<pre class="lang-c"><code>/* Valeur utilisé en mémoire dans les tables des pages
+pour dire qu'aucune page physique n'est assignée à cette page logique */
+#define NOT_ASSIGNED (-2)
+
+typedef enum
+{
+    USED = 0, /* page utilisée          */
+    FREE = 1, /* page inutilisée         */
+} STATE;      /* État d'une page         */
+
+static STATE physical_pages[NB_PAGES]; /* Table des pages physiques                       */</code></pre>
+						<p>
+							Les addresses logiques et physiques sont de type <code class="lang-c">int</code>.
+							Étant donné une adresse logique, ces 3 premiers bits (de poids faible) codent le déplacement
+							dans la page, tandis que les bits suivants codent le numéro de page.
+							Les fonctions suivantes permettent d'obtenir ces 2 composants :
+						</p>
+						<pre class="lang-c"><code>int get_page_number(int addr);
+int get_offset(int addr);</code></pre>
+						<p>
+							La fonction suivante permet d'obtenir une addresse à partir d'un numéro de page et un
+							déplacement :
+						</p>
+						<pre class="lang-c"><code>int get_page_number(int addr);
+int get_offset(int addr);
+int encode_addresse(int page_nb, int offset);</code></pre>
+						<p>
+							Enfin, la fonction <code class="lang-c">int first_word(int page_number)</code> permet de
+							récupérer l'addresse physique du premier mot mémoire d'une page physique.
+						</p>
+					</div>
+
+					<div class="py-2">
+						<h3 id="objectif">Description de l'objectif</h3>
+						<p>
+							Le but est d'implémenter une mémoire paginée avec les spécifications suivantes.
+						</p>
+						<ul>
+							<li>
+								Les processus n'auront le droit qu'à 8 pages de mémoire.
+							</li>
+							<li>
+								Une page va être assignée à chaque processus, celle-ci va contenir une table des pages
+								avec 8 entrées :
+								les 8 mots mémoires de la pages.
+								Le registre <code class="lang-c">RB</code> du cpu va contenir l'addresse physique de la
+								première entrée de la table des pages du processus courrant.
+								C'est la fonction <code class="lang-c">void init_processus_memory(PSW *cpu)</code> qui
+								se charge de faire ça.
+							</li>
+							<li>
+								On ne gaspille pas la mémoire : on assigne des pages physiques aux pages logiques d'un
+								processus uniquement si elle sont
+								utilisées.
+								À la création du processus, <code
+									class="lang-c">void init_processus_memory(PSW *cpu)</code> n'assigne aucune page
+								physique aux pages logiques du processus : chaque entrée de la table du processus doit
+								être égale à
+								<code class="lang-c">NOT_ASSIGNED</code>.
+							</li>
+							<li>
+								Quand un processus veut lire ou écrire dans une page logique qui n'est pas assignée à
+								une page physique, on va assigné une page physique à cette page logique.
+								On mettra à jour alors la table des pages de ce processus.
+								C'est la fonction <code
+									class="lang-c">WORD logical_to_physical(int logical_addr, PSW *cpu)</code>
+								qui se chargera de ça.
+							</li>
+						</ul>
+					</div>
+
+					<div class="py-2">
+						<h3 id="implementation">Fonctions à implémenter</h3>
+						<p>
+							Avant de commencer à coder, décommentez l'appel à <code class="lang-c">test_mmu()</code>
+							dans le fichier <code>simul.c</code> pour
+							lancer des tests sur les fonctions à implémenter.
+						</p>
+						<ol>
+							<li>
+								Modifier la fonction <code class="lang-c">bool is_logical_address(int value)</code> qui
+								doit vérifier si une addresse logique est valide.
+							</li>
+							<li>
+								Implémenter la fonction <code class="lang-c">int allocate_page(void)</code>
+								qui permet d'allouer une page physique libre. Suivez les consignes données en
+								commentaire.
+							</li>
+							<li>
+								Compléter la fonction <code class="lang-c">void init_processus_memory(PSW *cpu)</code>
+								pour initialiser la mémoire d'un processus.
+								Il faut assigner une page au processus pour sa table des page et initialisée celle-çi.
+							</li>
+							<li>
+								Implémenter la fonction <code
+									class="lang-c">void assign_page(int page_number, PSW *cpu)</code> qui assigne une
+								page physique à la page logique page_number d'un processus.
+							</li>
+							<li>
+								Modifier la fonction <code
+									class="lang-c">WORD logical_to_physical(int logical_address, PSW *cpu)</code> pour
+								traduire une addresse logique en addresse physique via la table des page du processus en
+								entrée.
+							</li>
+							<li>
+								Enfin, compléter la fonction
+								<code class="lang-c">void free_processus_memory(PSW *cpu)</code> qui libère la mémoire
+								alouée à un processus. Elle doit mettre à jour la page des tables physiques.
+							</li>
+						</ol>
+					</div>
+
+					<div class="py-2">
+						<h3 id="final">Test final</h3>
+						<p>
+							Une fois que votre code passe tous les tests, dans <code>systeme.c</code>, modifier la
+							fonction
+							<code class="lang-c">PSW system_init(void)</code> comme indiqué en commentaire.
+							Ensuite, exécuter le simulateur, normalement le processus 0 doit se terminer normalement, et
+							le processus 1 doit provoqué une erreur <i>instruction inconnue</i> uniquement pour
+							lui-même.
+						</p>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

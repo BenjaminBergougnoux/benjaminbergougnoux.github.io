@@ -108,7 +108,7 @@
 							<li>
 								<code>systeme.c</code> et <code>systeme.h</code> : définition du système avec
 								des fonctions pour l'initialiser,
-								traiter les interruptions. Il y a un ordonnanceur qui est appeler à la fin de
+								traiter les interruptions. Il y a un ordonnanceur qui est appelé à la fin de
 								chaque quantum (ordonnancement du tourniquet).
 							</li>
 							<li>
@@ -119,10 +119,10 @@
 							</li>
 							<li>
 								<code>prog1.asm</code> et <code>malveillant.asm</code> : deux exemples de
-								programmes assembleur. Le programme <code>prog1.asm</code> décremente un compteur et
+								programmes assembleur. Le programme <code>prog1.asm</code> décrémente un compteur et
 								fait un avec un appel système <code class="lang-c">sysc SYSC_EXIT</code> quand il
-								atteind 0.
-								De son coté, <code>malveillant.asm</code> écrit des <code class="lang-c">-8</code> en
+								atteint 0.
+								De son côté, <code>malveillant.asm</code> écrit des <code class="lang-c">-8</code> en
 								mémoire, jusqu'où sa malveillance ira-t-elle ???
 							</li>
 							<li>
@@ -132,7 +132,7 @@
 							<li>
 								<code>mmu.c</code> et <code>mmu.h</code> : simulation d'un <i>memory management
 									unit</i>. <b>Fichier contenant toutes les fonctions à implémenter.</b>
-								Permet de lire et d'écrire dans la mémoire à partir des addresses logiques d'un
+								Permet de lire et d'écrire dans la mémoire à partir des adresses logiques d'un
 								processus.
 							</li>
 						</ul>
@@ -141,7 +141,7 @@
 					<div class="py-2">
 						<h3 id="memory">Encapsulation de la mémoire centrale.</h3>
 						<p>
-							La mémoire centrale est protégée et ne peut pas être accèder n'importe comment.
+							La mémoire centrale est protégée et ne peut pas être accéder n'importe comment.
 							Dans <code>mmu.c</code> la mémoire centrale ne peut être modifiée qu'avec les fonctions
 							suivantes de <code>memory.c</code> :
 						</p>
@@ -156,11 +156,11 @@ WORD read_mem(int physical_address);</code></pre>
 WORD read_logical_mem(int logical_address, PSW *cpu);</code></pre>
 						<p>
 							Au début, <code>mmu.c</code> n'implémente aucune abstraction de la mémoire : les
-							addresses
-							logiques sont directement traduite en addresses physique telles quelles. Le but principal de
+							adresses
+							logiques sont directement traduite en adresses physiques telles quelles. Le but principal de
 							ce TP est de modifier la fonction suivante de <code>mmu.c</code> qui permet de transformer
 							une
-							addresse logique d'un processus en une addresse physique :
+							adresse logique d'un processus en une adresse physique :
 						</p>
 						<pre class="lang-c"><code>WORD logical_to_physical(int logical_address, PSW *cpu);</code></pre>
 					</div>
@@ -188,7 +188,7 @@ $ ./simul</code></pre>
 					</div>
 
 					<div class="py-2">
-						<h3 id="consigne1">Première éxécution</h3>
+						<h3 id="consigne1">Première exécution</h3>
 						<p>
 							Avant de commencer à implémenter les fonctions de <code>mmu.c</code>, exécuter le simulateur
 							et comprenez ce qu'il se passe. Pourquoi le processus 0 se termine sur une erreur
@@ -209,12 +209,12 @@ $ ./simul</code></pre>
 						<pre class="lang-c"><code>#define PAGE_SIZE (8)                  // Taille d'une page en nombre de mots mémoire (WORD)
 #define NB_PAGES (MAX_MEM / PAGE_SIZE) // Nombre de pages physiques</code></pre>
 						<p>
-							Ces constantes définissent la taille d'une page en nombre de mots mémoire (ici une page fait
-							8 mots mémoire (de 32 bits)), le nombre de page physique est calculé en divisant la taille
+							Ces constantes définissent la taille d'une page en nombre de mots mémoire (ici une page consiste en
+							8 mots mémoire (de 32 bits)), le nombre de pages physiques est calculé en divisant la taille
 							de la mémoire par la taille d'une page. Le code suivant définit le tableau permettant de
 							gérer l'allocation des pages physiques.
 						</p>
-						<pre class="lang-c"><code>/* Valeur utilisé en mémoire dans les tables des pages
+						<pre class="lang-c"><code>/* Valeur utilisée en mémoire dans les tables des pages
 pour dire qu'aucune page physique n'est assignée à cette page logique */
 #define NOT_ASSIGNED (-2)
 
@@ -226,7 +226,7 @@ typedef enum
 
 static STATE physical_pages[NB_PAGES]; /* Table des pages physiques                       */</code></pre>
 						<p>
-							Les addresses logiques et physiques sont de type <code class="lang-c">int</code>.
+							Les adresses logiques et physiques sont de type <code class="lang-c">int</code>.
 							Étant donné une adresse logique, ces 3 premiers bits (de poids faible) codent le déplacement
 							dans la page, tandis que les bits suivants codent le numéro de page.
 							Les fonctions suivantes permettent d'obtenir ces 2 composants :
@@ -234,15 +234,15 @@ static STATE physical_pages[NB_PAGES]; /* Table des pages physiques             
 						<pre class="lang-c"><code>int get_page_number(int addr);
 int get_offset(int addr);</code></pre>
 						<p>
-							La fonction suivante permet d'obtenir une addresse à partir d'un numéro de page et un
+							La fonction suivante permet d'obtenir une adresse à partir d'un numéro de page et un
 							déplacement :
 						</p>
 						<pre class="lang-c"><code>int get_page_number(int addr);
 int get_offset(int addr);
-int encode_addresse(int page_nb, int offset);</code></pre>
+int encode_adresse(int page_nb, int offset);</code></pre>
 						<p>
 							Enfin, la fonction <code class="lang-c">int first_word(int page_number)</code> permet de
-							récupérer l'addresse physique du premier mot mémoire d'une page physique.
+							récupérer l'adresse physique du premier mot mémoire d'une page physique.
 						</p>
 					</div>
 
@@ -258,16 +258,15 @@ int encode_addresse(int page_nb, int offset);</code></pre>
 							<li>
 								Une page va être assignée à chaque processus, celle-ci va contenir une table des pages
 								avec 8 entrées :
-								les 8 mots mémoires de la pages.
-								Le registre <code class="lang-c">RB</code> du cpu va contenir l'addresse physique de la
-								première entrée de la table des pages du processus courrant.
+								les 8 mots mémoires de la page.
+								Le registre <code class="lang-c">RB</code> du cpu va contenir l'adresse physique de la
+								première entrée de la table des pages du processus courant.
 								C'est la fonction <code class="lang-c">void init_processus_memory(PSW *cpu)</code> qui
 								se charge de faire ça.
 							</li>
 							<li>
 								On ne gaspille pas la mémoire : on assigne des pages physiques aux pages logiques d'un
-								processus uniquement si elle sont
-								utilisées.
+								processus uniquement si elles sont utilisées.
 								À la création du processus, <code
 									class="lang-c">void init_processus_memory(PSW *cpu)</code> n'assigne aucune page
 								physique aux pages logiques du processus : chaque entrée de la table du processus doit
@@ -276,7 +275,7 @@ int encode_addresse(int page_nb, int offset);</code></pre>
 							</li>
 							<li>
 								Quand un processus veut lire ou écrire dans une page logique qui n'est pas assignée à
-								une page physique, on va assigné une page physique à cette page logique.
+								une page physique, on va assigner une page physique à cette page logique.
 								On mettra à jour alors la table des pages de ce processus.
 								C'est la fonction <code
 									class="lang-c">WORD logical_to_physical(int logical_addr, PSW *cpu)</code>
@@ -288,14 +287,14 @@ int encode_addresse(int page_nb, int offset);</code></pre>
 					<div class="py-2">
 						<h3 id="implementation">Fonctions à implémenter</h3>
 						<p>
-							Avant de commencer à coder, décommentez l'appel à <code class="lang-c">test_mmu()</code>
+							Avant de commencer à coder, décommettez l'appel à <code class="lang-c">test_mmu()</code>
 							dans le fichier <code>simul.c</code> pour
 							lancer des tests sur les fonctions à implémenter.
 						</p>
 						<ol>
 							<li>
 								Modifier la fonction <code class="lang-c">bool is_logical_address(int value)</code> qui
-								doit vérifier si une addresse logique est valide.
+								doit vérifier si une adresse logique est valide.
 							</li>
 							<li>
 								Implémenter la fonction <code class="lang-c">int allocate_page(void)</code>
@@ -305,7 +304,7 @@ int encode_addresse(int page_nb, int offset);</code></pre>
 							<li>
 								Compléter la fonction <code class="lang-c">void init_processus_memory(PSW *cpu)</code>
 								pour initialiser la mémoire d'un processus.
-								Il faut assigner une page au processus pour sa table des page et initialisée celle-çi.
+								Il faut assigner une page au processus pour sa table des pages et initialisée celle-ci.
 							</li>
 							<li>
 								Implémenter la fonction <code
@@ -315,13 +314,13 @@ int encode_addresse(int page_nb, int offset);</code></pre>
 							<li>
 								Modifier la fonction <code
 									class="lang-c">WORD logical_to_physical(int logical_address, PSW *cpu)</code> pour
-								traduire une addresse logique en addresse physique via la table des page du processus en
+								traduire une adresse logique en adresse physique via la table des pages du processus en
 								entrée.
 							</li>
 							<li>
 								Enfin, compléter la fonction
 								<code class="lang-c">void free_processus_memory(PSW *cpu)</code> qui libère la mémoire
-								alouée à un processus. Elle doit mettre à jour la page des tables physiques.
+								allouée à un processus. Elle doit mettre à jour la page des tables physiques.
 							</li>
 						</ol>
 					</div>
@@ -332,8 +331,8 @@ int encode_addresse(int page_nb, int offset);</code></pre>
 							Une fois que votre code passe tous les tests, dans <code>systeme.c</code>, modifier la
 							fonction
 							<code class="lang-c">PSW system_init(void)</code> comme indiqué en commentaire.
-							Ensuite, exécuter le simulateur, normalement le processus 0 doit se terminer normalement, et
-							le processus 1 doit provoqué une erreur <i>instruction inconnue</i> uniquement pour
+							Ensuite, exécuter le simulateur, normalement le processus 0 doit se terminer normalement et
+							le processus 1 doit provoquer une erreur <i>instruction inconnue</i> uniquement pour
 							lui-même.
 						</p>
 					</div>

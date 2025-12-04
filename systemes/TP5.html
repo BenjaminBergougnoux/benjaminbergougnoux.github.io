@@ -56,7 +56,8 @@
 
 							<li class="list-group-item pt-1 pb-0 ps-1"><a href="#pagination">Pagination</a></li>
 							<li class="list-group-item pt-1 pb-0 ps-3"><a href="#mmu">Présentation du code</a></li>
-							<li class="list-group-item pt-1 pb-0 ps-3"><a href="#objectif">Description de l'objectif</a></li>
+							<li class="list-group-item pt-1 pb-0 ps-3"><a href="#objectif">Description de l'objectif</a>
+							</li>
 							<li class="list-group-item pt-1 pb-0 ps-3"><a href="#implementation">Fonctions à
 									implémenter</a></li>
 							<li class="list-group-item pt-1 pb-0 ps-3"><a href="#final">Test Final</a></li>
@@ -194,6 +195,15 @@ $ ./simul</code></pre>
 							et comprenez ce qu'il se passe. Pourquoi le processus 0 se termine sur une erreur
 							instruction inconnue ?
 						</p>
+						<p>
+							Par rapport au TP1 et TP2, il y a deux nouveaux registres
+							(d'autres ont été supprimés). Le nouveau registre PID stocke l'identifiant du processus
+							courant (il
+							remplace <code class="lang-c">current_thread</code>), cet identifiant est également l'index
+							du processus dans la table des processus. Le nouveau registre PTR permet de stocker une
+							adresse et ce registre se combine avec les instructions <code>LOAD</code> et
+							<code>STORE</code> afin pour charger et déchargé le registre à cette adresse.
+						</p>
 					</div>
 				</div>
 
@@ -209,7 +219,8 @@ $ ./simul</code></pre>
 						<pre class="lang-c"><code>#define PAGE_SIZE (8)                  // Taille d'une page en nombre de mots mémoire (WORD)
 #define NB_PAGES (MAX_MEM / PAGE_SIZE) // Nombre de pages physiques</code></pre>
 						<p>
-							Ces constantes définissent la taille d'une page en nombre de mots mémoire (ici une page consiste en
+							Ces constantes définissent la taille d'une page en nombre de mots mémoire (ici une page
+							consiste en
 							8 mots mémoire (de 32 bits)), le nombre de pages physiques est calculé en divisant la taille
 							de la mémoire par la taille d'une page. Le code suivant définit le tableau permettant de
 							gérer l'allocation des pages physiques.

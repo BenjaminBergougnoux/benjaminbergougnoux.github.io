@@ -63,7 +63,7 @@
 				<h1 id="htex-h1-1" class="htex" style="text-align: left;">TP n°7 : Les fonctions de lecture du SGF</h1>
 				<div class="text-bg-warning p-3 mb-2">
 					Les TP n°7 ET n°8 sont à rendre ensemble sur AMETICE
-					avant le vendredi 13 décembre 2024 à 15h45.
+					avant le vendredi 12 décembre 2025 à 16h33.
 				</div>
 				<div class="text-bg-danger p-3">
 					Ce TP doit être réalisé avec un système d'exploitation UNIX.
@@ -98,8 +98,9 @@
 							d'ouverture/lecture/écriture/fermeture des fichiers
 							(<span class="fw-bold text-danger">incomplet</code>).</li>
 						<li class="htex"><code>sgf-impl.o</code> : Implantation des
-							fonctions à terminer (<span class="fw-bold text-primary">code&nbsp;C non
-								fourni</code>).</li>
+							fonctions à terminer (<span class="fw-bold text-primary">code C non
+								fourni</span>). Ce fichier permet de tester chaque fonction que vous implémetez et d'isoler rapidement la source des bugs que vous rencontrez.
+							<b>Attention :</b> ce fichier object (.o) n'est pas compatible avec tous les machines / les systèmes d'exploitations. </li>
 					</ul>
 				</li>
 			</ul>
@@ -187,11 +188,11 @@
 					(<code>ptr</code> donc) en utilisant
 					le deuxième paramètre. Si la position demandée n'est pas un multiple de la taille des blocs, alors le bloc en question devra être chargé dans le tampon (fonction
 					<code>sgf_read_block</code>).
-					<span class="fw-bold text-primary">Attention</span>&nbsp;: prenez
+					<p><span class="fw-bold text-primary">Attention</span>&nbsp;: prenez
 						soin de limiter la lecture de bloc notamment quand la
 						nouvelle position concerne le même bloc que la position
 						précédente. Cette fonction renvoie 0 en cas de succès
-						et -1 sinon.
+						et -1 sinon.</p>
 				</li>
 				<li class="htex">Testez cette fonction en lisant, dans
 					un fichier, les caractères dont la position est

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TP8-Systèmes</title>
+	<meta name="description" content="TP8 de l'UE Système d'exploitation">
+	<meta name="author" content="Benjamin Bergougnoux">
+
+	<link rel="icon" type="image/png" href="logo.png" />
+	<link href="./../themes/prism.css" rel="stylesheet" />
+	<link href="./../themes/a11y-dark-legacy.css" rel="stylesheet" />
+	<link href="./../themes/mystyle.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+	<script src="../prism.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+	<script>
+		MathJax = {
+			tex: {
+				inlineMath: [['$', '$'], ['\\(', '\\)']]
+			},
+			svg: {
+				fontCache: 'global'
+			}
+		};
+	</script>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+
+<body id="home" data-spy="scroll" data-target="#myNavBar" data-offset="1" data-prismjs-copy="Copier"
+	data-prismjs-copy-error="Copie : erreur" data-prismjs-copy-success="Copie : succès!">
+	<div class="container pt-5 pb-3">
+
+		<div class="row py-3">
+			<div class="col-lg-3">
+				<div class="sticky-top pt-5">
+					<div class="card htex-toc">
+						<div class="card-header p-1 lp-2 htex-bg-blue">Sommaire</div>
+						<ul class="list-group list-group-flush no-htex">
+							<li class="list-group-item pt-1 pb-0 ps-1"><a href="#htex-h2-1">Écrire caractère après
+									caractère</a></li>
+							<li class="list-group-item pt-1 pb-0 ps-1"><a href="#htex-h2-2">Ouvrir un fichier en mode
+									ajout</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-8">
+				<h1 id="htex-h1-1 pt-4 py-2" class="htex" style="text-align: left;">TP n°8 : Les fonctions
+					d'écriture du SGF</h1>
+				<div class="text-bg-warning p-3 mb-2">
+					Les TP n°7 ET n°8 sont à rendre ensemble sur AMETICE
+					avant le vendredi 12 décembre 2025 à 16h33.
+				</div>
+				<div class="text-bg-danger p-3 mb-2">
+					Ce TP doit être réalisé avec un système d'exploitation UNIX.
+				</div>
+				<div class="text-bg-info p-3 mb-2">
+					<h4>Consignes pour le dépôt de fichiers sur Ametice :</h4>
+					<p>Déposez une archive <code>.zip</code> contenant :</p>
+					<ul>
+						<li>Vos fichiers <code>sgf-dir.c.c</code> et <code>sgf-io.c.c</code>.</li>
+						<li>Un fichier texte <code>README.md</code> indiquant les noms et prénoms des
+							membres du groupe et décrivant votre progression : les parties que vous avez
+							réussi à implémenter et celles où ça bug.</li>
+					</ul>
+					<p>Faites en sorte que votre code compile... <strong>Attention :</strong> le
+						non-respect de ces consignes peut vous coûter des points !</p>
+				</div>
+
+				<h2 class="htex pt-4 py-2" id="htex-h2-1">Écrire caractère après
+					caractère</h2>
+				<p class="my-3">Le principe est le même que pour la
+					lecture. Les caractères sont placés dans le <code>buffer</code> tant que celui-ci n'est pas
+					plein. Une fois le <code>buffer</code>
+					complété, un nouveau bloc est ajouté au fichier. Pour
+					re-programmer les fonctions d'écriture, suivez les étapes
+					ci-dessous&nbsp;:</p>
+				<ol type="1" class="htex">
+					<li class="my-3 htex">Re-programmez la fonction
+						<code>sgf_putc</code> du fichier
+						<span class="htex-ttt">sgf-io.c</span> et tester son
+						bon fonctionnement avec le code ci-dessous.
+
+						<pre class="language-c" id="htex-pre-1">
+						<code>
+	OFILE* file = sgf_open("essai.txt", WRITE_MODE);
+	sgf_puts(file, "Ceci est un petit texte qui occupe\n");
+	sgf_puts(file, "quelques blocs sur ce disque fictif.\n");
+	sgf_puts(file, "Le bloc faisant 128 octets, il faut\n");
+	sgf_puts(file, "que je remplisse pour utiliser\n");
+	sgf_puts(file, "plusieurs blocs.\n");
+	sgf_close(file);
+						</code>
+					  </pre>
+					</li>
+					<li class="my-3 htex">Programmez la fonction
+						<code>sgf_append_block</code> et
+						testez de nouveau l'écriture.
+					</li>
+					<li class="my-3 htex">Programmez la fonction
+						<code>sgf_close</code> et assurez vous
+						que vous ne perdez pas les derniers caractères du
+						fichier.
+					</li>
+					<li class="my-3 htex">Terminez par la fonction de
+						destruction <code>sgf_remove</code>.
+						Faites en sorte que cette fonction imprime l'état du
+						disque (nombre de blocs libres par exemple). Vous devez
+						notamment vérifier qu'il n'y a pas de fuite mémoire (le
+						nombre de bloc libres ne cesse de diminuer).</li>
+				</ol>
+				<h2 class="htex pt-4 py-2" id="htex-h2-2">Ouvrir un fichier en mode
+					ajout</h2>
+				<p class="my-3">On vous demande de mettre en place un
+					mode d'ouverture en ajout que ne vide pas le fichier mais
+					qui permet de l'agrandir. Suivez les étapes
+					ci-dessous:</p>
+				<ol type="1" class="htex">
+					<li class="my-3 htex">Modifiez le fichier
+						<span class="htex-ttt">sgf-header.h</span> pour
+						enrichir la déclaration suivante
+						<pre class="language-c" id="htex-pre-1">
+						<code>
+	typedef enum {
+		READ_MODE,         /* Fichier ouvert en lecture         */
+		WRITE_MODE,        /* Fichier ouvert en écriture        */
+		APPEND_MODE,       /* Fichier en mode ajout             */
+	} MODE;
+						</code>
+						</pre>
+					</li>
+					<li class="my-3 htex">Commencez par <span class="fw-bold text-primary">ajouter</span> le cas
+						<code>APPEND_MODE</code> à la fonction
+						<code>sgf_open</code>. Cette dernière
+						doit maintenant lire le dernier bloc du fichier si la
+						taille n'est pas un multiple de la taille des blocs.
+						(il faut lire le dernier bloc incomplet pour le
+						compléter).
+					</li>
+					<li class="my-3 htex"><span class="fw-bold text-primary">Attention</span>&nbsp;: la
+						fonction <code>sgf_append_block</code>
+						doit maintenant être modifiée. En mode ajout, il ne
+						faut pas ajouter un nouveau bloc mais simplement
+						récrire la <span class="fw-bold text-primary">nouvelle
+							version du dernier bloc</span>. Une fois cette
+						opération réalisée, <span class="fw-bold text-primary">nous ne sommes plus en mode
+							ajout</span>.</li>
+					<li class="my-3 htex">Testez ce mode en vidant un
+						fichier (ouverture en écriture) puis en l'ouvrant 300
+						fois en mode ajout afin, à chaque fois, d'ajouter un
+						seul caractère.</li>
+				</ol>
+			</div>
+</body>
+
+</html>

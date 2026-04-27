@@ -148,30 +148,30 @@ var app = new Vue({
       {
         id: 'BCS26',
         title: "A Logic-based Algorithmic Meta-Theorem for Treedepth: Single Exponential FPT Time and Polynomial Space",
-        authors: "with V. Chekan and G. Stamoulis",
-        conf: "Accepted at SODA 2026",
+        authors: "with V. Chekan and G. Stamoulis.",
+        conf: "SODA 2026",
         journal: "",
         comment: "",
         openacess: "http://arxiv.org/abs/2510.19793",
         pdf: "http://arxiv.org/abs/pdf/2510.19793",
         bibtex: "",
         presentations: [
-          // {
-          //   place: "",
-          //   slides: "",
-          //   video: ""
-          // }
+          {
+            place: "Modern Trends in Parameterized Complexity, Workshop, Venise April 2026",
+            slides: "./pdf/mtpc_workshop_Benjamin.pdf",
+            video: ""
+          }
         ],
         abstract: 'For a graph $G$, the parameter treedepth measures the minimum depth among all forests $F$, called elimination forests, such that $G$ is a subgraph of the ancestor-descendant closure of $F$. We introduce a logic, called neighborhood operator logic with acyclicity, connectivity and clique constraints ($\\mathsf{NEO}_2[\\mathsf{FRec}]+\\mathsf{ACK}$ for short), that captures all NP-hard problems---like Independent Set or Hamiltonian Cycle---that are known to be tractable in time $2^{O(td)}n^{O(1)}$ and space $n^{\\mathcal{O}(1)}$ on $n$-vertex graphs provided with elimination forests of depth $td$. We provide a model checking algorithm for $\\mathsf{NEO}_2[\\mathsf{FRec}]+\\mathsf{ACK}$ with such complexity that unifies and extends these results. For $\\mathsf{NEO}_2[\\mathsf{FRec}]+\\mathsf{K}$, the fragment of the above logic that does not use acyclicity and connectivity constraints, we get a strengthening of this result, where the space complexity is reduced to $O(td\\log(n))$. <br> With a similar mechanism as the distance neighborhood logic introduced in [Bergougnoux, Dreier and Jaffke, SODA 2023], the logic $\\mathsf{NEO}_2[\\mathsf{FRec}]+\\mathsf{ACK}$ is an extension of the fully-existential $\\mathsf{MSO}_2$ with predicates for (1) querying generalizations of the neighborhoods of vertex sets, (2) verifying the connectivity and acyclicity of vertex and edge sets, and (3) verifying that a vertex set induces a clique. Interestingly, $\\mathsf{NEO}_2[\\mathsf{FRec}]$, the fragment of $\\mathsf{NEO}_2[\\mathsf{FRec}]+\\mathsf{K}$ that does not use clique constraints, is equivalent (up to minor features) to a variant of modal logic---introduced in [Pilipczuk, MFCS 2011]---that captures many problems known to be tractable in single exponential time when parameterized by treewidth. Our results provide $2^{O(td)}n^{O(1)}$ time and $n^{\\mathcal{O}(1)}$ space algorithms for problems for which the existence of such algorithms was previously unknown. In particular, $\\mathsf{NEO}_2[\\mathsf{FRec}]$ captures CNF-SAT via the incidence graphs associated to CNF formulas, and it also captures several modulo counting problems like Odd Dominating Set. <br> To prove our results, we extend the applicability of  algebraic transforms such as the inclusion-exclusion principle and the discrete Fourier transform. To our knowledge, this is the first time, the discrete Fourier transform have been used to obtain space-efficient algorithms on graphs of bounded treedepth. To achieve the logspace complexity for $\\mathsf{NEO}_2[\\mathsf{FRec}]+\\mathsf{K}$, we also use the technique from [Pilipczuk and Wrochna, ACM Trans. Comput. Theory 2018] based on Chinese remainder theorem.'
         },
       {
         id: 'BHLJ25',
         title: "On Algorithmic Applications of $\\mathcal{F}$-Branchwidth",
-        authors: "with T. Hamm, P. T. Lima and L. Jaffke",
+        authors: "with T. Hamm, P. T. Lima and L. Jaffke.",
         conf: "ESA 2025",
         journal: "",
         comment: "Soon on arXiv",
-        openacess: "",
+        openacess: "https://doi.org/10.4230/LIPIcs.ESA.2025.16",
         pdf: "",
         bibtex: "",
         presentations: [
@@ -186,9 +186,9 @@ var app = new Vue({
       {
         id: 'BJ2025',
         title: "Hamiltonicity Parameterized by Mim-Width is (Indeed) Para-NP-Hard",
-        authors: "with L. Jaffke",
+        authors: "with L. Jaffke.",
         conf: "IPEC 2025",
-        journal: "",
+        journal: "TCS 2026",
         comment: "",
         openacess: "https://arxiv.org/abs/2507.00612",
         pdf: "https://arxiv.org/abs/pdf/2507.00612",
@@ -205,7 +205,7 @@ var app = new Vue({
       {
         id: 'BBD25',
         title: "Mim-Width is paraNP-complete",
-        authors: "with E. Bonnet and J. Duron",
+        authors: "with E. Bonnet and J. Duron.",
         conf: "ICALP 2025",
         journal: "",
         comment: "",
@@ -254,7 +254,7 @@ var app = new Vue({
         title: "Kernelization for Finding Lineal Topologies (Depth-First Spanning Trees) with Many or Few Leaves",
         authors: "with E. Sam, P. A. Golovach, N. Blaser.",
         conf: "FCT 2023",
-        journal: "",
+        journal: "JCSS 2025",
         comment: "",
         openacess: "https://arxiv.org/abs/2307.00362",
         pdf: "https://arxiv.org/pdf/2307.00362",
@@ -282,7 +282,7 @@ var app = new Vue({
         title: "New Width Parameters for Independent Set: One-sided-mim-width and Neighbor-depth",
         authors: "with T. Korhonen, I. Razgon.",
         conf: "WG 2023",
-        journal: "",
+        journal: "Algorithmica 2025",
         comment: "",
         openacess: "https://arxiv.org/abs/2302.10643",
         pdf: "https://arxiv.org/pdf/2302.10643",

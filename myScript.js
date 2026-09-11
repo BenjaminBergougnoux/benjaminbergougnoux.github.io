@@ -146,6 +146,25 @@ var app = new Vue({
       //   abstract: ''
       // },
       {
+        id: 'BCK26',
+        title: "Tight Bounds for Some W[1]-Hard Problems Parameterized by Multi-Clique-Width",
+        authors: "with V. Chekan and S. Kratsch.",
+        conf: "WG 2026",
+        journal: "",
+        comment: "",
+        openacess: "https://doi.org/10.48550/arXiv.2604.25841",
+        pdf: "http://arxiv.org/abs/pdf/2604.25841",
+        bibtex: "",
+        presentations: [
+          // {
+          //   place: "",
+          //   slides: "",
+          //   video: ""
+          // }
+        ],
+        abstract: 'In this work we contribute to the study of the fine-grained complexity of problems parameterized by multi-clique-width, which was initiated by Fürer [ITCS 2017] and pursued further by Chekan and Kratsch [MFCS 2023]. Multi-clique-width is a parameter defined analogously to clique-width but every vertex is allowed to hold multiple labels simultaneously. This parameter is upper-bounded by both clique-width and treewidth (plus a constant), hence it generalizes both of them without an exponential blow-up. Conversely, graphs of multi-clique-width $k$ have clique-width at most $2^k$, and there exist graphs with clique-width at least $2^{\Omega(k)}$. Thus, while the two parameters are functionally equivalent, the fine-grained complexity of problems may differ relative to them. As our first and main result we show that under ETH the Max Cut problem cannot be solved in time $n^{2^{o(k)}} \cdot f(k)$ on graphs of multi-clique-width $k$ for any computable function $f$. For clique-width $k$ an $n^{\mathcal{O}(k)}$ algorithm by Fomin et al. [SIAM J. Comput. 2014] is tight under ETH. This makes Max Cut the first known problem for which the tight running times differ for parameterization by clique-width and multi-clique-width and it contributes to the short list of known lower bounds of form $n^{2^{o(k)}} \cdot f(k)$. As our second contribution we show that Hamiltonian Cycle and Edge Dominating Set can be solved in time $n^{\mathcal{O}(k)}$ on graphs of multi-clique-width $k$ matching the tight running time for clique-width. These results answer three questions left open by Chekan and Kratsch [MFCS 2023]. '
+      },
+      {
         id: 'BCS26',
         title: "A Logic-based Algorithmic Meta-Theorem for Treedepth: Single Exponential FPT Time and Polynomial Space",
         authors: "with V. Chekan and G. Stamoulis.",

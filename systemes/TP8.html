@@ -40,7 +40,6 @@
 <body id="home" data-spy="scroll" data-target="#myNavBar" data-offset="1" data-prismjs-copy="Copier"
 	data-prismjs-copy-error="Copie : erreur" data-prismjs-copy-success="Copie : succès!">
 	<div class="container pt-5 pb-3">
-
 		<div class="row py-3">
 			<div class="col-lg-3">
 				<div class="sticky-top pt-5">
@@ -94,16 +93,16 @@
 						bon fonctionnement avec le code ci-dessous.
 
 						<pre class="language-c" id="htex-pre-1">
-						<code>
-	OFILE* file = sgf_open("essai.txt", WRITE_MODE);
-	sgf_puts(file, "Ceci est un petit texte qui occupe\n");
-	sgf_puts(file, "quelques blocs sur ce disque fictif.\n");
-	sgf_puts(file, "Le bloc faisant 128 octets, il faut\n");
-	sgf_puts(file, "que je remplisse pour utiliser\n");
-	sgf_puts(file, "plusieurs blocs.\n");
-	sgf_close(file);
-						</code>
-					  </pre>
+																			<code>
+																				OFILE* file = sgf_open("essai.txt", WRITE_MODE);
+																				sgf_puts(file, "Ceci est un petit texte qui occupe\n");
+																				sgf_puts(file, "quelques blocs sur ce disque fictif.\n");
+																				sgf_puts(file, "Le bloc faisant 128 octets, il faut\n");
+																				sgf_puts(file, "que je remplisse pour utiliser\n");
+																				sgf_puts(file, "plusieurs blocs.\n");
+																				sgf_close(file);
+																			</code>
+																		</pre>
 					</li>
 					<li class="my-3 htex">Programmez la fonction
 						<code>sgf_append_block</code> et
@@ -132,14 +131,14 @@
 						<span class="htex-ttt">sgf-header.h</span> pour
 						enrichir la déclaration suivante
 						<pre class="language-c" id="htex-pre-1">
-						<code>
-	typedef enum {
-		READ_MODE,         /* Fichier ouvert en lecture         */
-		WRITE_MODE,        /* Fichier ouvert en écriture        */
-		APPEND_MODE,       /* Fichier en mode ajout             */
-	} MODE;
-						</code>
-						</pre>
+																<code>
+																	typedef enum {
+																		READ_MODE,         /* Fichier ouvert en lecture         */
+																		WRITE_MODE,        /* Fichier ouvert en écriture        */
+																		APPEND_MODE,       /* Fichier en mode ajout             */
+																	} MODE;
+																</code>
+															</pre>
 					</li>
 					<li class="my-3 htex">Commencez par <span class="fw-bold text-primary">ajouter</span> le cas
 						<code>APPEND_MODE</code> à la fonction
@@ -163,6 +162,8 @@
 						seul caractère.</li>
 				</ol>
 			</div>
+		</div>
+	</div>
 </body>
 
 </html>
